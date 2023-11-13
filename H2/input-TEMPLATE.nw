@@ -1,0 +1,54 @@
+ echo
+ start H2
+ title "H2"
+
+ memory total 24 gb
+
+ geometry units bohr
+ symmetry c1
+        H  0.00000000  0.00000000  0.00000000
+        H  0.00000000  REPLACE  0.00000000
+ end
+
+ basis 
+   * library cc-pVQZ
+ end
+
+ mcscf
+   active  10
+   actelec 2
+   multiplicity 1
+   maxiter 40
+   vectors input H2.mos
+   vectors output H2.mos
+ end
+
+ task mcscf
+
+ scf
+   vectors input H2.mos
+   vectors output H2-REPLACE.mos
+   noscf
+ end
+
+ tce
+   2eorb
+   2emet 13
+   ccsd
+   maxiter 300
+   lshift 0.8
+ end
+
+# set tce:print_integrals T
+# set tce:qorb 10 
+# set tce:qela 1
+# set tce:qelb 1
+
+ set tce:qducc T
+ set tce:nactv 9 
+ set tce:nonhf T
+ set tce:ducc_model 6
+
+ set tce:printtol 0.02
+ 
+ task tce

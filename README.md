@@ -15,9 +15,13 @@ All Terms for DUCC Hamiltonians are printed.
 One unique element is printed, and the remainder must be filled in.
 
 **2-Electron integrals (v)**
+
 Start with “begin_two_electron_integrals”
+
 Form:
+
 i   j   k   l   v(i, j, k, l)
+
 v(electron 1, electron 1, electron 2, electron 2)
 
 

@@ -1,0 +1,2285 @@
+ argument  1 = input.nw
+  NWChem w/ OpenMP: maximum threads =    1
+
+
+
+============================== echo of input deck ==============================
+ echo
+ start H2O
+ title "H2O"
+
+ memory total 24 gb
+
+ geometry units bohr
+ symmetry c1
+        O  0.00000000  0.00000000  0.00000000
+        H  0.00000000  1.8250155  0.00000000
+        H  1.72558000 -0.64860000  0.00000000
+ end
+
+ basis spherical
+   * library 6-311++G**
+ end
+
+ mcscf
+   active  8
+   actelec 10
+   multiplicity 1
+   maxiter 40
+   vectors input h2o.mos
+   vectors output h2o.mos
+ end
+
+ task mcscf
+
+ scf
+   vectors input h2o.mos
+   vectors output h2o-trash.mos
+   noscf
+ end
+
+ tce
+   2eorb
+   2emet 13
+   ccsd
+   maxiter 300
+ end
+
+ set tce:print_integrals T
+ set tce:qorb 8
+ set tce:qela 5
+ set tce:qelb 5
+
+# set tce:qducc T
+# set tce:nactv 3
+# set tce:nonhf T
+# set tce:ducc_model 6
+
+ set tce:printtol 0.02
+
+ task tce
+================================================================================
+
+
+                                         
+                                         
+
+
+             Northwest Computational Chemistry Package (NWChem) 7.0.1
+             --------------------------------------------------------
+
+
+                    Environmental Molecular Sciences Laboratory
+                       Pacific Northwest National Laboratory
+                                Richland, WA 99352
+
+                              Copyright (c) 1994-2020
+                       Pacific Northwest National Laboratory
+                            Battelle Memorial Institute
+
+             NWChem is an open-source computational chemistry package
+                        distributed under the terms of the
+                      Educational Community License (ECL) 2.0
+             A copy of the license is included with this distribution
+                              in the LICENSE.TXT file
+
+                                  ACKNOWLEDGMENT
+                                  --------------
+
+            This software and its documentation were developed at the
+            EMSL at Pacific Northwest National Laboratory, a multiprogram
+            national laboratory, operated for the U.S. Department of Energy
+            by Battelle under Contract Number DE-AC05-76RL01830. Support
+            for this work was provided by the Department of Energy Office
+            of Biological and Environmental Research, Office of Basic
+            Energy Sciences, and the Office of Advanced Scientific Computing.
+
+
+           Job information
+           ---------------
+
+    hostname        = WE46210
+    program         = /home/baum612/code/nwchem/bin/LINUX64/nwchem
+    date            = Thu Sep  5 11:06:47 2024
+
+    compiled        = Wed_Sep_04_02:00:17_2024
+    source          = /home/baum612/code/nwchem
+    nwchem branch   = 7.0.0
+    nwchem revision = nwchem_on_git-4191-g39d87d64de
+    ga revision     = 5.8.1
+    use scalapack   = F
+    input           = input.nw
+    prefix          = H2O.
+    data base       = ./H2O.db
+    status          = startup
+    nproc           =        1
+    time left       =     -1s
+
+
+
+           Memory information
+           ------------------
+
+    heap     =  805306366 doubles =   6144.0 Mbytes
+    stack    =  805306363 doubles =   6144.0 Mbytes
+    global   = 1610612736 doubles =  12288.0 Mbytes (distinct from heap & stack)
+    total    = 3221225465 doubles =  24576.0 Mbytes
+    verify   = yes
+    hardfail = no 
+
+
+           Directory information
+           ---------------------
+
+  0 permanent = .
+  0 scratch   = .
+
+
+
+
+                                NWChem Input Module
+                                -------------------
+
+
+                                        H2O
+                                        ---
+ Turning off AUTOSYM since
+ SYMMETRY directive was detected!
+
+
+          ------
+          auto-z
+          ------
+  no constraints, skipping    0.0000000000000000     
+  no constraints, skipping    0.0000000000000000     
+
+
+                             Geometry "geometry" -> ""
+                             -------------------------
+
+ Output coordinates in a.u. (scale by  1.000000000 to convert to a.u.)
+
+  No.       Tag          Charge          X              Y              Z
+ ---- ---------------- ---------- -------------- -------------- --------------
+    1 O                    8.0000    -0.17255800    -0.11764155     0.00000000
+    2 H                    1.0000    -0.17255800     1.70737395     0.00000000
+    3 H                    1.0000     1.55302200    -0.76624155     0.00000000
+
+      Atomic Mass 
+      ----------- 
+
+      O                 15.994910
+      H                  1.007825
+
+
+ Effective nuclear repulsion energy (a.u.)       9.0547756949
+
+            Nuclear Dipole moment (a.u.) 
+            ----------------------------
+        X                 Y               Z
+ ---------------- ---------------- ----------------
+    -0.0000000000     0.0000000000     0.0000000000
+
+
+
+                                Z-matrix (autoz)
+                                -------- 
+
+ Units are Angstrom for bonds and degrees for angles
+
+      Type          Name      I     J     K     L     M      Value
+      ----------- --------  ----- ----- ----- ----- ----- ----------
+    1 Stretch                  1     2                       0.96576
+    2 Stretch                  1     3                       0.97551
+    3 Bend                     2     1     3               110.59992
+
+
+            XYZ format geometry
+            -------------------
+     3
+ geometry
+ O                    -0.09131377    -0.06225323     0.00000000
+ H                    -0.09131377     0.90350345     0.00000000
+ H                     0.82182391    -0.40547760     0.00000000
+
+ ==============================================================================
+                                internuclear distances
+ ------------------------------------------------------------------------------
+       center one      |      center two      | atomic units |       a.u.
+ ------------------------------------------------------------------------------
+    2 H                |   1 O                |     1.82502  |     1.82502
+    3 H                |   1 O                |     1.84345  |     1.84345
+ ------------------------------------------------------------------------------
+                         number of included internuclear distances:          2
+ ==============================================================================
+
+
+
+ ==============================================================================
+                                 internuclear angles
+ ------------------------------------------------------------------------------
+        center 1       |       center 2       |       center 3       |  degrees
+ ------------------------------------------------------------------------------
+    2 H                |   1 O                |   3 H                |   110.60
+ ------------------------------------------------------------------------------
+                            number of included internuclear angles:          1
+ ==============================================================================
+
+
+
+
+
+ Summary of "ao basis" -> "" (spherical)
+ ------------------------------------------------------------------------------
+       Tag                 Description            Shells   Functions and Types
+ ---------------- ------------------------------  ------  ---------------------
+ *                         6-311++G**                 on all atoms 
+
+
+                      Basis "ao basis" -> "ao basis" (spherical)
+                      -----
+  O (Oxygen)
+  ----------
+            Exponent  Coefficients 
+       -------------- ---------------------------------------------------------
+  1 S  8.58850000E+03  0.001895
+  1 S  1.29723000E+03  0.014386
+  1 S  2.99296000E+02  0.070732
+  1 S  8.73771000E+01  0.240001
+  1 S  2.56789000E+01  0.594797
+  1 S  3.74004000E+00  0.280802
+
+  2 S  4.21175000E+01  0.113889
+  2 S  9.62837000E+00  0.920811
+  2 S  2.85332000E+00 -0.003274
+
+  3 P  4.21175000E+01  0.036511
+  3 P  9.62837000E+00  0.237153
+  3 P  2.85332000E+00  0.819702
+
+  4 S  9.05661000E-01  1.000000
+
+  5 P  9.05661000E-01  1.000000
+
+  6 S  2.55611000E-01  1.000000
+
+  7 P  2.55611000E-01  1.000000
+
+  8 S  8.45000000E-02  1.000000
+
+  9 P  8.45000000E-02  1.000000
+
+ 10 D  1.29200000E+00  1.000000
+
+  H (Hydrogen)
+  ------------
+            Exponent  Coefficients 
+       -------------- ---------------------------------------------------------
+  1 S  3.38650000E+01  0.025494
+  1 S  5.09479000E+00  0.190373
+  1 S  1.15879000E+00  0.852161
+
+  2 S  3.25840000E-01  1.000000
+
+  3 S  1.02741000E-01  1.000000
+
+  4 S  3.60000000E-02  1.000000
+
+  5 P  7.50000000E-01  1.000000
+
+
+
+ Summary of "ao basis" -> "ao basis" (spherical)
+ ------------------------------------------------------------------------------
+       Tag                 Description            Shells   Functions and Types
+ ---------------- ------------------------------  ------  ---------------------
+ O                         6-311++G**               10       22   5s4p1d
+ H                         6-311++G**                5        7   4s1p
+
+
+
+                            NWChem Direct MCSCF Module
+                            --------------------------
+
+
+                                        H2O
+
+
+     -----------------------------------
+       Basis functions:             36
+       Inactive shells:              0
+       Active shells:                8
+       Active electrons:            10
+       Symmetry:                    a       
+       Multiplicity:                 1
+       Orbital rotations:          224
+     -----------------------------------
+
+     -----------------------------------
+       E2 extrapolation:             F
+       Conjugacy:                    T
+       Micro CI relax:               T
+       Canonical orbitals:           T
+       Maximum iterations:          40
+       Converge threshold:    1.00E-04
+       Conjugacy resets:            20
+       Initial levelshift:        0.10
+     -----------------------------------
+
+ Loading old vectors from job with title :
+
+H2O
+
+
+   input molecular orbitals = ./h2o.mos
+  output molecular orbtials = ./h2o.mos
+
+       No. of determinants:          3136
+
+
+  Starting Orbital Energies
+   -20.560556    -1.355795    -0.751303    -0.591388    -0.531530    -0.026491
+    -0.025168    -0.017001     0.071157     0.087603     0.238128     0.277977
+     0.316251     0.490841     0.500016     0.616072     0.996412     1.044320
+     1.479150     1.515900     1.635129     1.732143     1.867606     2.246708
+     2.338658     2.741479     2.857667     3.429298     3.532581     3.655680
+     4.080049     4.208105     5.312191     5.772878     6.166105    51.563840
+
+  Orbital Symmetry Irreps
+a    a    a    a    a    a    a    a    a    a    a    a    a    a    a   
+a    a    a    a    a    a    a    a    a    a    a    a    a    a    a   
+a    a    a    a    a    a   
+
+ Integral file          = ./H2O.aoints.0
+ Record size in doubles =  65536        No. of integs per rec  =  43688
+ Max. records in memory =     10        Max. records in file   = 232548
+ No. of bits per label  =      8        No. of bits per value  =     64
+
+
+ #quartets = 2.216D+04 #integrals = 1.003D+05 #direct =  0.0% #cached =100.0%
+
+
+
+
+          %%%%% MacroIteration   1 %%%%%
+
+
+          Number of sigma calls:       14
+                       o<<<<< (aa):             0.00
+                       o<<<<< (bb):             0.00
+                       o<<<<< (ab):             0.02
+                       o<<<<< (total)           0.02
+                       o<<<<< (aa) ff           0.00
+                       o<<<<< (aa) gop          0.00
+                       o<<<<< (aa) dot          0.00
+                       o<<<<< (ab) str          0.00
+                       o<<<<< (ab) gath         0.00
+                       o<<<<< (ab) dotab        0.00
+                       o<<<<< (ab) scat         0.00
+                       o<<<<< (ab) sync         0.00
+                       o<<<<< Density           0.01
+                       o<<<<< Density one       0.00
+                       o<<<<< Density two       0.00
+                       o<<<<< Density ab        0.01
+                       o<<<<< Spin adapt        0.25
+                       o<<<<< Symm adapt        0.00
+
+                       o<<<<< (ab) max sync:      0.00
+
+           >>>| Valence CI:            -85.199756581709
+           >>>| MCSCF energy:          -76.144980886837
+           >>>| Gradient norm:          0.117072230D-01
+
+                              ----- Line search ------
+
+        step       energy         lsg     num-lsg   num-lsh   lsrat    time
+      ------- ---------------- --------- --------- --------- ------- --------
+       0.0000     -76.14498089 -1.21D-05  0.00D+00  0.00D+00 0.0D+00      0.5
+
+          Number of sigma calls:       14
+                       o<<<<< (aa):             0.00
+                       o<<<<< (bb):             0.00
+                       o<<<<< (ab):             0.04
+                       o<<<<< (total)           0.04
+                       o<<<<< (aa) ff           0.00
+                       o<<<<< (aa) gop          0.00
+                       o<<<<< (aa) dot          0.00
+                       o<<<<< (ab) str          0.00
+                       o<<<<< (ab) gath         0.00
+                       o<<<<< (ab) dotab        0.00
+                       o<<<<< (ab) scat         0.00
+                       o<<<<< (ab) sync         0.00
+                       o<<<<< Density           0.01
+                       o<<<<< Density one       0.00
+                       o<<<<< Density two       0.00
+                       o<<<<< Density ab        0.01
+                       o<<<<< Spin adapt        0.39
+                       o<<<<< Symm adapt        0.00
+
+                       o<<<<< (ab) max sync:      0.00
+       1.0000     -76.14498711 -3.58D-07 -3.58D-07  1.17D-05 3.0D-02      0.9
+     --- Orbitals canonicalized ---
+
+
+
+          %%%%% MacroIteration   2 %%%%%
+
+
+          Number of sigma calls:       11
+                       o<<<<< (aa):             0.00
+                       o<<<<< (bb):             0.00
+                       o<<<<< (ab):             0.03
+                       o<<<<< (total)           0.04
+                       o<<<<< (aa) ff           0.00
+                       o<<<<< (aa) gop          0.00
+                       o<<<<< (aa) dot          0.00
+                       o<<<<< (ab) str          0.00
+                       o<<<<< (ab) gath         0.00
+                       o<<<<< (ab) dotab        0.00
+                       o<<<<< (ab) scat         0.00
+                       o<<<<< (ab) sync         0.00
+                       o<<<<< Density           0.01
+                       o<<<<< Density one       0.00
+                       o<<<<< Density two       0.00
+                       o<<<<< Density ab        0.01
+                       o<<<<< Spin adapt        0.27
+                       o<<<<< Symm adapt        0.00
+
+                       o<<<<< (ab) max sync:      0.00
+
+           >>>| Valence CI:            -85.199762802490
+           >>>| MCSCF energy:          -76.144987107619
+           >>>| Gradient norm:          0.722113840D-03
+     --- Warning:    1 Hessian diagonals < 0.05 ---
+     --- Conjugacy reset ---
+
+                              ----- Line search ------
+
+        step       energy         lsg     num-lsg   num-lsh   lsrat    time
+      ------- ---------------- --------- --------- --------- ------- --------
+       0.0000     -76.14498711 -1.08D-07  0.00D+00  0.00D+00 0.0D+00      1.3
+
+          Number of sigma calls:        9
+                       o<<<<< (aa):             0.00
+                       o<<<<< (bb):             0.00
+                       o<<<<< (ab):             0.02
+                       o<<<<< (total)           0.03
+                       o<<<<< (aa) ff           0.00
+                       o<<<<< (aa) gop          0.00
+                       o<<<<< (aa) dot          0.00
+                       o<<<<< (ab) str          0.00
+                       o<<<<< (ab) gath         0.00
+                       o<<<<< (ab) dotab        0.00
+                       o<<<<< (ab) scat         0.00
+                       o<<<<< (ab) sync         0.00
+                       o<<<<< Density           0.01
+                       o<<<<< Density one       0.00
+                       o<<<<< Density two       0.00
+                       o<<<<< Density ab        0.01
+                       o<<<<< Spin adapt        0.19
+                       o<<<<< Symm adapt        0.00
+
+                       o<<<<< (ab) max sync:      0.00
+       1.0000     -76.14498718 -3.79D-08 -3.79D-08  7.01D-08 3.5D-01      1.6
+
+          Number of sigma calls:        9
+                       o<<<<< (aa):             0.00
+                       o<<<<< (bb):             0.00
+                       o<<<<< (ab):             0.02
+                       o<<<<< (total)           0.03
+                       o<<<<< (aa) ff           0.00
+                       o<<<<< (aa) gop          0.00
+                       o<<<<< (aa) dot          0.00
+                       o<<<<< (ab) str          0.00
+                       o<<<<< (ab) gath         0.00
+                       o<<<<< (ab) dotab        0.00
+                       o<<<<< (ab) scat         0.00
+                       o<<<<< (ab) sync         0.00
+                       o<<<<< Density           0.01
+                       o<<<<< Density one       0.00
+                       o<<<<< Density two       0.00
+                       o<<<<< Density ab        0.01
+                       o<<<<< Spin adapt        0.19
+                       o<<<<< Symm adapt        0.00
+
+                       o<<<<< (ab) max sync:      0.00
+       1.5413     -76.14498719 -4.17D-11 -4.03D-11  7.00D-08 3.9D-04      1.8
+
+
+
+          %%%%% MacroIteration   3 %%%%%
+
+
+          Number of sigma calls:        1
+                       o<<<<< (aa):             0.00
+                       o<<<<< (bb):             0.00
+                       o<<<<< (ab):             0.00
+                       o<<<<< (total)           0.00
+                       o<<<<< (aa) ff           0.00
+                       o<<<<< (aa) gop          0.00
+                       o<<<<< (aa) dot          0.00
+                       o<<<<< (ab) str          0.00
+                       o<<<<< (ab) gath         0.00
+                       o<<<<< (ab) dotab        0.00
+                       o<<<<< (ab) scat         0.00
+                       o<<<<< (ab) sync         0.00
+                       o<<<<< Density           0.01
+                       o<<<<< Density one       0.00
+                       o<<<<< Density two       0.00
+                       o<<<<< Density ab        0.01
+                       o<<<<< Spin adapt        0.00
+                       o<<<<< Symm adapt        0.00
+
+                       o<<<<< (ab) max sync:      0.00
+
+           >>>| Valence CI:            -85.199762885758
+           >>>| MCSCF energy:          -76.144987190887
+           >>>| Gradient norm:          0.138199284D-03
+     --- Warning:    1 Hessian diagonals < 0.05 ---
+
+                              ----- Line search ------
+
+        step       energy         lsg     num-lsg   num-lsh   lsrat    time
+      ------- ---------------- --------- --------- --------- ------- --------
+       0.0000     -76.14498719 -6.20D-09  0.00D+00  0.00D+00 0.0D+00      1.9
+
+          Number of sigma calls:        8
+                       o<<<<< (aa):             0.00
+                       o<<<<< (bb):             0.00
+                       o<<<<< (ab):             0.02
+                       o<<<<< (total)           0.02
+                       o<<<<< (aa) ff           0.00
+                       o<<<<< (aa) gop          0.00
+                       o<<<<< (aa) dot          0.00
+                       o<<<<< (ab) str          0.00
+                       o<<<<< (ab) gath         0.00
+                       o<<<<< (ab) dotab        0.00
+                       o<<<<< (ab) scat         0.00
+                       o<<<<< (ab) sync         0.00
+                       o<<<<< Density           0.01
+                       o<<<<< Density one       0.00
+                       o<<<<< Density two       0.00
+                       o<<<<< Density ab        0.00
+                       o<<<<< Spin adapt        0.15
+                       o<<<<< Symm adapt        0.00
+
+                       o<<<<< (ab) max sync:      0.00
+       1.0000     -76.14498720 -2.94D-09 -2.94D-09  3.26D-09 4.7D-01      2.1
+
+          Number of sigma calls:        8
+                       o<<<<< (aa):             0.00
+                       o<<<<< (bb):             0.00
+                       o<<<<< (ab):             0.02
+                       o<<<<< (total)           0.03
+                       o<<<<< (aa) ff           0.00
+                       o<<<<< (aa) gop          0.00
+                       o<<<<< (aa) dot          0.00
+                       o<<<<< (ab) str          0.00
+                       o<<<<< (ab) gath         0.00
+                       o<<<<< (ab) dotab        0.00
+                       o<<<<< (ab) scat         0.00
+                       o<<<<< (ab) sync         0.00
+                       o<<<<< Density           0.01
+                       o<<<<< Density one       0.00
+                       o<<<<< Density two       0.00
+                       o<<<<< Density ab        0.01
+                       o<<<<< Spin adapt        0.15
+                       o<<<<< Symm adapt        0.00
+
+                       o<<<<< (ab) max sync:      0.00
+       1.8999     -76.14498720 -1.75D-13  4.01D-15  3.26D-09 2.8D-05      2.3
+
+
+
+          %%%%% MacroIteration   4 %%%%%
+
+
+          Number of sigma calls:        1
+                       o<<<<< (aa):             0.00
+                       o<<<<< (bb):             0.00
+                       o<<<<< (ab):             0.00
+                       o<<<<< (total)           0.00
+                       o<<<<< (aa) ff           0.00
+                       o<<<<< (aa) gop          0.00
+                       o<<<<< (aa) dot          0.00
+                       o<<<<< (ab) str          0.00
+                       o<<<<< (ab) gath         0.00
+                       o<<<<< (ab) dotab        0.00
+                       o<<<<< (ab) scat         0.00
+                       o<<<<< (ab) sync         0.00
+                       o<<<<< Density           0.01
+                       o<<<<< Density one       0.00
+                       o<<<<< Density two       0.00
+                       o<<<<< Density ab        0.01
+                       o<<<<< Spin adapt        0.00
+                       o<<<<< Symm adapt        0.00
+
+                       o<<<<< (ab) max sync:      0.00
+
+           >>>| Valence CI:            -85.199762891647
+           >>>| MCSCF energy:          -76.144987196776
+           >>>| Gradient norm:          0.980368400D-04
+
+
+
+
+     ==============================
+            MCSCF Converged
+     ==============================
+
+
+
+          Canonical Eigenvalues
+
+              1      
+    1  -20.5601
+    2   -1.3570
+    3   -0.7526
+    4   -0.5918
+    5   -0.5317
+    6   -0.0264
+    7   -0.0250
+    8   -0.0170
+    9    0.0711
+   10    0.0876
+   11    0.2382
+   12    0.2780
+   13    0.3162
+   14    0.4910
+   15    0.5002
+   16    0.6154
+   17    0.9951
+   18    1.0433
+   19    1.4796
+   20    1.5152
+   21    1.6343
+   22    1.7327
+   23    1.8700
+   24    2.2500
+   25    2.3429
+   26    2.7399
+   27    2.8567
+   28    3.4311
+   29    3.5354
+   30    3.6591
+   31    4.0815
+   32    4.2101
+   33    5.3117
+   34    5.7756
+   35    6.1737
+   36   51.5663
+
+
+          Converged CI vector
+
+   Index           Coefficient          Config. Occupation
+         1         -0.97502785          1  2  3  4  5  1  2  3  4  5
+        22          0.07302164          1  2  3  4  5  1  2  3  4  8
+         3          0.04677968          1  2  3  4  5  1  2  3  5  6
+        27         -0.02328334          1  2  3  4  5  1  2  3  6  8
+         9          0.04310855          1  2  3  4  5  1  2  4  5  7
+        38         -0.02674539          1  2  3  4  5  1  2  4  7  8
+      1177          0.07302164          1  2  3  4  8  1  2  3  4  5
+      1198          0.05462050          1  2  3  4  8  1  2  3  4  8
+      1179          0.02881726          1  2  3  4  8  1  2  3  5  6
+      1185          0.03654412          1  2  3  4  8  1  2  4  5  7
+      1181         -0.02224696          1  2  3  4  8  1  3  4  5  6
+       113          0.04677968          1  2  3  5  6  1  2  3  4  5
+       134          0.02881726          1  2  3  5  6  1  2  3  4  8
+       115          0.04200104          1  2  3  5  6  1  2  3  5  6
+       121          0.03699176          1  2  3  5  6  1  2  4  5  7
+       117         -0.02814873          1  2  3  5  6  1  3  4  5  6
+      1457         -0.02328334          1  2  3  6  8  1  2  3  4  5
+       172          0.02570524          1  2  4  5  6  1  2  4  5  6
+       449          0.04310855          1  2  4  5  7  1  2  3  4  5
+       470          0.03654412          1  2  4  5  7  1  2  3  4  8
+       451          0.03699176          1  2  4  5  7  1  2  3  5  6
+       457          0.06207542          1  2  4  5  7  1  2  4  5  7
+       453         -0.02637636          1  2  4  5  7  1  3  4  5  6
+      2073         -0.02674539          1  2  4  7  8  1  2  3  4  5
+       246         -0.02224696          1  3  4  5  6  1  2  3  4  8
+       227         -0.02814873          1  3  4  5  6  1  2  3  5  6
+       233         -0.02637636          1  3  4  5  6  1  2  4  5  7
+       229          0.02741186          1  3  4  5  6  1  3  4  5  6
+
+          Number of sigma calls:        1
+                       o<<<<< (aa):             0.00
+                       o<<<<< (bb):             0.00
+                       o<<<<< (ab):             0.00
+                       o<<<<< (total)           0.00
+                       o<<<<< (aa) ff           0.00
+                       o<<<<< (aa) gop          0.00
+                       o<<<<< (aa) dot          0.00
+                       o<<<<< (ab) str          0.00
+                       o<<<<< (ab) gath         0.00
+                       o<<<<< (ab) dotab        0.00
+                       o<<<<< (ab) scat         0.00
+                       o<<<<< (ab) sync         0.00
+                       o<<<<< Density           0.01
+                       o<<<<< Density one       0.00
+                       o<<<<< Density two       0.00
+                       o<<<<< Density ab        0.01
+                       o<<<<< Spin adapt        0.00
+                       o<<<<< Symm adapt        0.00
+
+                       o<<<<< (ab) max sync:      0.00
+
+
+
+          Natural orbital occupation numbers
+
+              1      
+    1    2.0000
+    2    1.9989
+    3    1.9808
+    4    1.9769
+    5    1.9764
+    6    0.0245
+    7    0.0236
+    8    0.0189
+
+
+          Number of sigma calls:       14
+                       o<<<<< (aa):             0.00
+                       o<<<<< (bb):             0.00
+                       o<<<<< (ab):             0.03
+                       o<<<<< (total)           0.03
+                       o<<<<< (aa) ff           0.00
+                       o<<<<< (aa) gop          0.00
+                       o<<<<< (aa) dot          0.00
+                       o<<<<< (ab) str          0.00
+                       o<<<<< (ab) gath         0.00
+                       o<<<<< (ab) dotab        0.00
+                       o<<<<< (ab) scat         0.00
+                       o<<<<< (ab) sync         0.00
+                       o<<<<< Density           0.01
+                       o<<<<< Density one       0.00
+                       o<<<<< Density two       0.00
+                       o<<<<< Density ab        0.01
+                       o<<<<< Spin adapt        0.33
+                       o<<<<< Symm adapt        0.00
+
+                       o<<<<< (ab) max sync:      0.00
+
+
+       Final MCSCF results 
+       ------------------- 
+
+       Total MCSCF energy =    -76.144987196775
+            Gradient norm =      9.8D-05
+
+    CPU time for solution =      2.8s
+   Wall time for solution =      5.5s
+
+
+
+                        Analysis of MCSCF natural orbitals
+                        ----------------------------------
+
+ Vector    1  Occ=1.999990D+00  E=-2.056015D+01  Symmetry=a
+              MO Center= -9.1D-02, -6.2D-02, -1.6D-08, r^2= 1.7D-02
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+     1      0.560042  1 O  s                  2      0.488535  1 O  s          
+
+ Vector    2  Occ=1.998916D+00  E=-1.356999D+00  Symmetry=a
+              MO Center= -3.0D-01, -2.1D-01, -3.0D-05, r^2= 4.2D-01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+     6      0.554395  1 O  s                 10      0.482685  1 O  s          
+
+ Vector    3  Occ=1.980804D+00  E=-7.526032D-01  Symmetry=a
+              MO Center= -7.3D-02, -4.9D-02,  2.9D-05, r^2= 7.1D-01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+     9      0.435814  1 O  pz                13      0.406674  1 O  pz         
+     5      0.288398  1 O  pz         
+
+ Vector    4  Occ=1.976947D+00  E=-5.917618D-01  Symmetry=a
+              MO Center= -1.5D-02,  3.7D-01,  1.0D-06, r^2= 5.9D-01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+     8      0.329331  1 O  py                24      0.263297  2 H  s          
+     4      0.218258  1 O  py                12      0.214217  1 O  py         
+    23      0.185766  2 H  s          
+
+ Vector    5  Occ=1.976400D+00  E=-5.317195D-01  Symmetry=a
+              MO Center=  3.0D-01, -1.7D-01,  5.5D-07, r^2= 6.4D-01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+     7      0.328543  1 O  px                31      0.277150  3 H  s          
+     3      0.217443  1 O  px                11      0.215137  1 O  px         
+    30      0.190736  3 H  s          
+
+ Vector    6  Occ=2.450860D-02  E=-2.640139D-02  Symmetry=a
+              MO Center=  4.4D-01, -2.2D-02,  6.0D-06, r^2= 7.7D-01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+     6      0.564013  1 O  s                  7      0.471647  1 O  px         
+    31     -0.462654  3 H  s                  3      0.401001  1 O  px         
+    30     -0.252208  3 H  s                 24     -0.209523  2 H  s          
+    11     -0.173160  1 O  px         
+
+ Vector    7  Occ=2.356548D-02  E=-2.504577D-02  Symmetry=a
+              MO Center=  1.4D-02,  3.3D-01,  1.5D-06, r^2= 8.4D-01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+     8      0.533949  1 O  py                24     -0.516584  2 H  s          
+     4      0.429900  1 O  py                31      0.304514  3 H  s          
+    23     -0.263541  2 H  s                  7     -0.195901  1 O  px         
+     6      0.177404  1 O  s          
+
+ Vector    8  Occ=1.886959D-02  E=-1.699799D-02  Symmetry=a
+              MO Center= -5.5D-02, -3.7D-02,  3.5D-05, r^2= 1.4D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    13      0.658064  1 O  pz                 5     -0.515995  1 O  pz         
+     9     -0.457491  1 O  pz                17      0.266724  1 O  pz         
+
+ Vector    9  Occ=0.000000D+00  E= 7.109161D-02  Symmetry=a
+              MO Center=  5.2D-01,  3.5D-01, -2.4D-05, r^2= 1.1D+01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    33      0.984029  3 H  s                 26      0.973636  2 H  s          
+    14     -0.795862  1 O  s                 32     -0.333591  3 H  s          
+    25     -0.323035  2 H  s                 10      0.248521  1 O  s          
+
+ Vector   10  Occ=0.000000D+00  E= 8.760832D-02  Symmetry=a
+              MO Center=  5.1D-01,  3.6D-01, -5.4D-09, r^2= 1.4D+01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    26      2.657219  2 H  s                 33     -2.651696  3 H  s          
+    32      0.439014  3 H  s                 25     -0.430946  2 H  s          
+    16     -0.336646  1 O  py                15      0.229738  1 O  px         
+
+ Vector   11  Occ=0.000000D+00  E= 2.382411D-01  Symmetry=a
+              MO Center= -2.4D-01, -1.7D-01,  2.1D-05, r^2= 5.6D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    14      3.626607  1 O  s                 25     -2.786318  2 H  s          
+    32     -2.718234  3 H  s                 15      1.920651  1 O  px         
+    16      1.352691  1 O  py                11     -0.346284  1 O  px         
+    10      0.254723  1 O  s                 26      0.255762  2 H  s          
+    33      0.247701  3 H  s                 12     -0.239057  1 O  py         
+
+ Vector   12  Occ=0.000000D+00  E= 2.779640D-01  Symmetry=a
+              MO Center= -4.4D-01, -3.0D-01,  6.1D-10, r^2= 5.8D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    25      3.338506  2 H  s                 32     -3.293918  3 H  s          
+    16     -2.878691  1 O  py                15      1.989049  1 O  px         
+    26      0.765987  2 H  s                 33     -0.756344  3 H  s          
+    12      0.308836  1 O  py                24     -0.260450  2 H  s          
+    31      0.256801  3 H  s                 11     -0.215296  1 O  px         
+
+ Vector   13  Occ=0.000000D+00  E= 3.161829D-01  Symmetry=a
+              MO Center=  6.9D-02,  5.0D-02, -1.1D-04, r^2= 5.4D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    14      8.205582  1 O  s                 25     -3.948270  2 H  s          
+    32     -3.888139  3 H  s                 15      1.509044  1 O  px         
+    10     -1.148600  1 O  s                 16      1.066425  1 O  py         
+    26     -0.342443  2 H  s                 33     -0.314440  3 H  s          
+    24      0.234018  2 H  s                 31      0.229418  3 H  s          
+
+ Vector   14  Occ=0.000000D+00  E= 4.910135D-01  Symmetry=a
+              MO Center=  6.3D-01,  1.7D-01, -7.5D-09, r^2= 6.3D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    32      3.432124  3 H  s                 25     -3.015357  2 H  s          
+    33     -1.693875  3 H  s                 26      1.579275  2 H  s          
+    31     -1.123621  3 H  s                 24      0.954211  2 H  s          
+    16      0.453961  1 O  py                15     -0.346183  1 O  px         
+
+ Vector   15  Occ=0.000000D+00  E= 5.002381D-01  Symmetry=a
+              MO Center=  4.3D-01,  5.6D-01, -5.9D-07, r^2= 5.6D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    25      3.114834  2 H  s                 32      2.560969  3 H  s          
+    14     -1.940680  1 O  s                 24     -1.167069  2 H  s          
+    31     -0.996576  3 H  s                 26     -0.807707  2 H  s          
+    33     -0.549077  3 H  s                 15     -0.302193  1 O  px         
+    10     -0.278945  1 O  s                 16     -0.277377  1 O  py         
+
+ Vector   16  Occ=0.000000D+00  E= 6.154089D-01  Symmetry=a
+              MO Center= -8.6D-02, -5.9D-02,  9.2D-05, r^2= 5.4D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    17     -1.449458  1 O  pz                13      1.402875  1 O  pz         
+     9     -0.425457  1 O  pz         
+
+ Vector   17  Occ=0.000000D+00  E= 9.950658D-01  Symmetry=a
+              MO Center=  2.9D-02, -1.1D-02,  1.7D-05, r^2= 2.5D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    14      3.490526  1 O  s                 25     -2.292799  2 H  s          
+    10     -2.234227  1 O  s                 32     -2.112384  3 H  s          
+    24      1.824430  2 H  s                 11     -1.714792  1 O  px         
+    31      1.648930  3 H  s                 12     -1.357329  1 O  py         
+    15      1.348656  1 O  px                16      1.069210  1 O  py         
+
+ Vector   18  Occ=0.000000D+00  E= 1.043279D+00  Symmetry=a
+              MO Center= -2.9D-01, -1.7D-01, -1.2D-07, r^2= 2.7D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    12      2.162219  1 O  py                16     -1.653618  1 O  py         
+    11     -1.622092  1 O  px                31      1.521580  3 H  s          
+    32     -1.483292  3 H  s                 24     -1.380953  2 H  s          
+    25      1.301252  2 H  s                 15      1.240639  1 O  px         
+    26      0.706272  2 H  s                 33     -0.702722  3 H  s          
+
+
+ Wrote Lagrangian and 1- and 2-particle density matrices to ./H2O.mcpdm
+
+
+     Multipole analysis of the density
+     ---------------------------------
+
+     L   x y z        total        nuclear
+     -   - - -        -----        -------
+     0   0 0 0     -0.000000     10.000000
+
+     1   1 0 0      0.656911     -0.000000
+     1   0 1 0      0.450934      0.000000
+     1   0 0 1     -0.000003      0.000000
+
+     2   2 0 0     -4.288830      2.679864
+     2   1 1 0     -0.862790     -1.322211
+     2   1 0 1      0.000006      0.000000
+     2   0 2 0     -3.660949      3.612968
+     2   0 1 1      0.000004      0.000000
+     2   0 0 2     -5.809633      0.000000
+
+
+  Mulliken analysis of the total density
+  --------------------------------------
+
+    Atom       Charge   Shell Charges
+ -----------   ------   -------------------------------------------------------
+    1 O    8     8.51   1.08  0.91  0.95  0.99  2.07  0.79  1.52 -0.01  0.19  0.01
+    2 H    1     0.75   0.26  0.40  0.02  0.01  0.07
+    3 H    1     0.75   0.26  0.40  0.02  0.01  0.07
+
+    Mulliken analysis of the active space density
+    ---------------------------------------------
+
+    Atom       Charge   Shell Charges
+ -----------   ------   -------------------------------------------------------
+    1 O    8     8.51   1.08  0.91  0.95  0.99  2.07  0.79  1.52 -0.01  0.19  0.01
+    2 H    1     0.75   0.26  0.40  0.02  0.01  0.07
+    3 H    1     0.75   0.26  0.40  0.02  0.01  0.07
+
+ Parallel integral file used       3 records with       0 large values
+
+
+ Task  times  cpu:        2.8s     wall:        5.5s
+
+
+                                NWChem Input Module
+                                -------------------
+
+
+                                 NWChem SCF Module
+                                 -----------------
+
+
+                                        H2O
+
+
+
+  ao basis        = "ao basis"
+  functions       =    36
+  atoms           =     3
+  closed shells   =     5
+  open shells     =     0
+  charge          =   0.00
+  wavefunction    = RHF 
+  input vectors   = ./h2o.mos
+  output vectors  = ./h2o-trash.mos
+  use symmetry    = F
+  symmetry adapt  = F
+
+
+ Summary of "ao basis" -> "ao basis" (spherical)
+ ------------------------------------------------------------------------------
+       Tag                 Description            Shells   Functions and Types
+ ---------------- ------------------------------  ------  ---------------------
+ O                         6-311++G**               10       22   5s4p1d
+ H                         6-311++G**                5        7   4s1p
+
+
+
+ Forming initial guess at       5.5s
+
+
+ Loading old vectors from job with title :
+
+H2O
+
+
+ Starting SCF solution at       5.5s
+
+
+
+ ----------------------------------------------
+         Quadratically convergent ROHF
+
+ Convergence threshold     :          1.000E-04
+ Maximum no. of iterations :           30
+ Final Fock-matrix accuracy:          1.000E-07
+ ----------------------------------------------
+
+
+ Integral file          = ./H2O.aoints.0
+ Record size in doubles =  65536        No. of integs per rec  =  43688
+ Max. records in memory =     10        Max. records in file   = 232553
+ No. of bits per label  =      8        No. of bits per value  =     64
+
+
+ #quartets = 2.216D+04 #integrals = 1.002D+05 #direct =  0.0% #cached =100.0%
+
+
+
+       Final RHF  results 
+       ------------------ 
+
+         Total SCF energy =    -76.049508162510
+      One-electron energy =   -122.738160435805
+      Two-electron energy =     37.633876578423
+ Nuclear repulsion energy =      9.054775694871
+
+        Time for solution =      0.0s
+
+
+             Final eigenvalues
+             -----------------
+
+              1      
+    1  -20.5601
+    2   -1.3570
+    3   -0.7526
+    4   -0.5918
+    5   -0.5317
+    6   -0.0264
+    7   -0.0250
+    8   -0.0170
+    9    0.0711
+   10    0.0876
+   11    0.2382
+   12    0.2780
+   13    0.3162
+   14    0.4910
+   15    0.5002
+
+                       ROHF Final Molecular Orbital Analysis
+                       -------------------------------------
+
+ Vector    2  Occ=2.000000D+00  E=-1.356999D+00
+              MO Center= -3.0D-01, -2.1D-01, -3.0D-05, r^2= 4.2D-01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+     6      0.554395  1 O  s                 10      0.482685  1 O  s          
+
+ Vector    3  Occ=2.000000D+00  E=-7.526032D-01
+              MO Center= -7.3D-02, -4.9D-02,  2.9D-05, r^2= 7.1D-01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+     9      0.435814  1 O  pz                13      0.406674  1 O  pz         
+     5      0.288398  1 O  pz         
+
+ Vector    4  Occ=2.000000D+00  E=-5.917618D-01
+              MO Center= -1.5D-02,  3.7D-01,  1.0D-06, r^2= 5.9D-01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+     8      0.329331  1 O  py                24      0.263297  2 H  s          
+     4      0.218258  1 O  py                12      0.214217  1 O  py         
+    23      0.185766  2 H  s          
+
+ Vector    5  Occ=2.000000D+00  E=-5.317195D-01
+              MO Center=  3.0D-01, -1.7D-01,  5.5D-07, r^2= 6.4D-01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+     7      0.328543  1 O  px                31      0.277150  3 H  s          
+     3      0.217443  1 O  px                11      0.215137  1 O  px         
+    30      0.190736  3 H  s          
+
+ Vector    6  Occ=0.000000D+00  E=-2.640139D-02
+              MO Center=  4.4D-01, -2.2D-02,  6.0D-06, r^2= 7.7D-01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+     6      0.564013  1 O  s                  7      0.471647  1 O  px         
+    31     -0.462654  3 H  s                  3      0.401001  1 O  px         
+    30     -0.252208  3 H  s                 24     -0.209523  2 H  s          
+    11     -0.173160  1 O  px         
+
+ Vector    7  Occ=0.000000D+00  E=-2.504577D-02
+              MO Center=  1.4D-02,  3.3D-01,  1.5D-06, r^2= 8.4D-01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+     8      0.533949  1 O  py                24     -0.516584  2 H  s          
+     4      0.429900  1 O  py                31      0.304514  3 H  s          
+    23     -0.263541  2 H  s                  7     -0.195901  1 O  px         
+     6      0.177404  1 O  s          
+
+ Vector    8  Occ=0.000000D+00  E=-1.699799D-02
+              MO Center= -5.5D-02, -3.7D-02,  3.5D-05, r^2= 1.4D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    13      0.658064  1 O  pz                 5     -0.515995  1 O  pz         
+     9     -0.457491  1 O  pz                17      0.266724  1 O  pz         
+
+ Vector    9  Occ=0.000000D+00  E= 7.109161D-02
+              MO Center=  5.2D-01,  3.5D-01, -2.4D-05, r^2= 1.1D+01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    33      0.984029  3 H  s                 26      0.973636  2 H  s          
+    14     -0.795862  1 O  s                 32     -0.333591  3 H  s          
+    25     -0.323035  2 H  s                 10      0.248521  1 O  s          
+
+ Vector   10  Occ=0.000000D+00  E= 8.760832D-02
+              MO Center=  5.1D-01,  3.6D-01, -5.4D-09, r^2= 1.4D+01
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    26      2.657219  2 H  s                 33     -2.651696  3 H  s          
+    32      0.439014  3 H  s                 25     -0.430946  2 H  s          
+    16     -0.336646  1 O  py                15      0.229738  1 O  px         
+
+ Vector   11  Occ=0.000000D+00  E= 2.382411D-01
+              MO Center= -2.4D-01, -1.7D-01,  2.1D-05, r^2= 5.6D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    14      3.626607  1 O  s                 25     -2.786318  2 H  s          
+    32     -2.718234  3 H  s                 15      1.920651  1 O  px         
+    16      1.352691  1 O  py                11     -0.346284  1 O  px         
+    10      0.254723  1 O  s                 26      0.255762  2 H  s          
+    33      0.247701  3 H  s                 12     -0.239057  1 O  py         
+
+ Vector   12  Occ=0.000000D+00  E= 2.779640D-01
+              MO Center= -4.4D-01, -3.0D-01,  6.1D-10, r^2= 5.8D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    25      3.338506  2 H  s                 32     -3.293918  3 H  s          
+    16     -2.878691  1 O  py                15      1.989049  1 O  px         
+    26      0.765987  2 H  s                 33     -0.756344  3 H  s          
+    12      0.308836  1 O  py                24     -0.260450  2 H  s          
+    31      0.256801  3 H  s                 11     -0.215296  1 O  px         
+
+ Vector   13  Occ=0.000000D+00  E= 3.161829D-01
+              MO Center=  6.9D-02,  5.0D-02, -1.1D-04, r^2= 5.4D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    14      8.205582  1 O  s                 25     -3.948270  2 H  s          
+    32     -3.888139  3 H  s                 15      1.509044  1 O  px         
+    10     -1.148600  1 O  s                 16      1.066425  1 O  py         
+    26     -0.342443  2 H  s                 33     -0.314440  3 H  s          
+    24      0.234018  2 H  s                 31      0.229418  3 H  s          
+
+ Vector   14  Occ=0.000000D+00  E= 4.910135D-01
+              MO Center=  6.3D-01,  1.7D-01, -7.5D-09, r^2= 6.3D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    32      3.432124  3 H  s                 25     -3.015357  2 H  s          
+    33     -1.693875  3 H  s                 26      1.579275  2 H  s          
+    31     -1.123621  3 H  s                 24      0.954211  2 H  s          
+    16      0.453961  1 O  py                15     -0.346183  1 O  px         
+
+ Vector   15  Occ=0.000000D+00  E= 5.002381D-01
+              MO Center=  4.3D-01,  5.6D-01, -5.9D-07, r^2= 5.6D+00
+   Bfn.  Coefficient  Atom+Function         Bfn.  Coefficient  Atom+Function  
+  ----- ------------  ---------------      ----- ------------  ---------------
+    25      3.114834  2 H  s                 32      2.560969  3 H  s          
+    14     -1.940680  1 O  s                 24     -1.167069  2 H  s          
+    31     -0.996576  3 H  s                 26     -0.807707  2 H  s          
+    33     -0.549077  3 H  s                 15     -0.302193  1 O  px         
+    10     -0.278945  1 O  s                 16     -0.277377  1 O  py         
+
+
+ center of mass
+ --------------
+ x =  -0.07599894 y =  -0.05181234 z =   0.00000000
+
+ moments of inertia (a.u.)
+ ------------------
+           3.702669463345           1.242451454841           0.000000000000
+           1.242451454841           2.833002082974           0.000000000000
+           0.000000000000           0.000000000000           6.535671546319
+
+  Mulliken analysis of the total density
+  --------------------------------------
+
+    Atom       Charge   Shell Charges
+ -----------   ------   -------------------------------------------------------
+    1 O    8     8.51   1.08  0.91  0.94  0.99  2.08  0.79  1.52 -0.01  0.19  0.01
+    2 H    1     0.75   0.26  0.39  0.02  0.01  0.07
+    3 H    1     0.74   0.26  0.40  0.02  0.01  0.07
+
+       Multipole analysis of the density wrt the origin
+       ------------------------------------------------
+
+     L   x y z        total         open         nuclear
+     -   - - -        -----         ----         -------
+     0   0 0 0     -0.000000      0.000000     10.000000
+
+     1   1 0 0      0.666454      0.000000     -0.000000
+     1   0 1 0      0.457286      0.000000      0.000000
+     1   0 0 1     -0.000002      0.000000      0.000000
+
+     2   2 0 0     -4.263188      0.000000      2.679864
+     2   1 1 0     -0.870460      0.000000     -1.322211
+     2   1 0 1      0.000006      0.000000      0.000000
+     2   0 2 0     -3.630103      0.000000      3.612968
+     2   0 1 1      0.000004      0.000000      0.000000
+     2   0 0 2     -5.783751      0.000000      0.000000
+
+
+ Parallel integral file used       3 records with       0 large values
+
+ ------------------------------------
+     Number of active orbitals      8
+     Number of active alpha electrons      5
+     Number of active beta electrons       5
+ ------------------------------------
+                   NWChem Extensible Many-Electron Theory Module
+                   ---------------------------------------------
+
+              ======================================================
+                   This portion of the program was automatically
+                  generated by a Tensor Contraction Engine (TCE).
+                  The development of this portion of the program
+                 and TCE was supported by US Department of Energy,
+                Office of Science, Office of Basic Energy Science.
+                      TCE is a product of Battelle and PNNL.
+              Please cite: S.Hirata, J.Phys.Chem.A 107, 9887 (2003).
+              ======================================================
+
+                                        H2O
+
+
+            General Information
+            -------------------
+      Number of processors :     1
+         Wavefunction type : Restricted Hartree-Fock
+          No. of electrons :    10
+           Alpha electrons :     5
+            Beta electrons :     5
+           No. of orbitals :    72
+            Alpha orbitals :    36
+             Beta orbitals :    36
+        Alpha frozen cores :     0
+         Beta frozen cores :     0
+     Alpha frozen virtuals :    28
+      Beta frozen virtuals :    28
+         Spin multiplicity : singlet 
+    Number of AO functions :    36
+       Number of AO shells :    20
+        Use of symmetry is : off
+      Symmetry adaption is : off
+         Schwarz screening : 0.10D-09
+
+          Correlation Information
+          -----------------------
+          Calculation type : Coupled-cluster singles & doubles                           
+   Perturbative correction : none                                                        
+            Max iterations :      300
+        Residual threshold : 0.10D-06
+     T(0) DIIS level shift : 0.00D+00
+     L(0) DIIS level shift : 0.00D+00
+     T(1) DIIS level shift : 0.00D+00
+     L(1) DIIS level shift : 0.00D+00
+     T(R) DIIS level shift : 0.00D+00
+     T(I) DIIS level shift : 0.00D+00
+   CC-T/L Amplitude update :  5-th order DIIS
+                I/O scheme : Global Array Library
+        L-threshold :  0.10D-06
+        EOM-threshold :  0.10D-06
+ no EOMCCSD initial starts read in
+ TCE RESTART OPTIONS
+ READ_INT:   F
+ WRITE_INT:  F
+ READ_TA:    F
+ WRITE_TA:   F
+ READ_XA:    F
+ WRITE_XA:   F
+ READ_IN3:   F
+ WRITE_IN3:  F
+ SLICE:      F
+ D4D5:       F
+ quantumc:   T
+ qrotation:  F
+ pwtce:      F
+ qducc:      F
+ nacto:                         0
+ nrotv:                         0
+ nrot:                          0
+
+            Memory Information
+            ------------------
+          Available GA space size is    1610611440 doubles
+          Available MA space size is    1610610740 doubles
+
+ Maximum block size supplied by input
+ Maximum block size         1 doubles
+
+ tile_dim =      1
+
+ Block   Spin    Irrep     Size     Offset   Alpha
+ -------------------------------------------------
+   1    alpha     a      1 doubles       0       1
+   2    alpha     a      1 doubles       1       2
+   3    alpha     a      1 doubles       2       3
+   4    alpha     a      1 doubles       3       4
+   5    alpha     a      1 doubles       4       5
+   6    beta      a      1 doubles       5       1
+   7    beta      a      1 doubles       6       2
+   8    beta      a      1 doubles       7       3
+   9    beta      a      1 doubles       8       4
+  10    beta      a      1 doubles       9       5
+  11    alpha     a      1 doubles      10      11
+  12    alpha     a      1 doubles      11      12
+  13    alpha     a      1 doubles      12      13
+  14    beta      a      1 doubles      13      11
+  15    beta      a      1 doubles      14      12
+  16    beta      a      1 doubles      15      13
+
+ Global array virtual files algorithm will be used
+
+ Parallel file system coherency ......... OK
+
+ Integral file          = ./H2O.aoints.0
+ Record size in doubles =  65536        No. of integs per rec  =  43688
+ Max. records in memory =     10        Max. records in file   = 232553
+ No. of bits per label  =      8        No. of bits per value  =     64
+
+
+ #quartets = 2.216D+04 #integrals = 1.003D+05 #direct =  0.0% #cached =100.0%
+
+
+ Fock matrix recomputed
+ 1-e file size   =               64
+ 1-e file name   = ./H2O.f1
+ Cpu & wall time / sec            0.0            0.0
+ 4-electron integrals stored in orbital form
+
+ v2    file size   =              666
+ 4-index algorithm nr.  13 is used
+ imaxsize =       30
+ imaxsize ichop =        0
+ begin_one_electron_integrals
+    1    1       -32.8756014494
+    2    1        -1.9425215837
+    3    1         0.0000169582
+    4    1         0.1850969323
+    5    1         0.1291820978
+    6    1         0.2852966434
+    7    1         0.0883538492
+    8    1        -0.0000200517
+    1    2        -1.9425215837
+    2    2        -7.8834222436
+    3    2        -0.0000287057
+    4    2        -0.2890855122
+    5    2        -0.2012442797
+    6    2        -0.0919206813
+    7    2        -0.0276903511
+    8    2        -0.0000111922
+    1    3         0.0000169582
+    2    3        -0.0000287057
+    3    3        -6.9546467155
+    4    3        -0.0000145120
+    5    3        -0.0000101819
+    6    3        -0.0000286101
+    7    3        -0.0000103972
+    8    3         2.2738830627
+    1    4         0.1850969323
+    2    4        -0.2890855122
+    3    4        -0.0000145120
+    4    4        -6.8797921922
+    5    4        -0.1131241657
+    6    4        -1.2731849355
+    7    4        -1.6350799915
+    8    4        -0.0000380966
+    1    5         0.1291820978
+    2    5        -0.2012442797
+    3    5        -0.0000101819
+    4    5        -0.1131241657
+    5    5        -6.7756176173
+    6    5        -1.6423424299
+    7    5         1.2551351178
+    8    5        -0.0000251285
+    1    6         0.2852966434
+    2    6        -0.0919206813
+    3    6        -0.0000286101
+    4    6        -1.2731849355
+    5    6        -1.6423424299
+    6    6        -6.0997544015
+    7    6         0.0385452359
+    8    6        -0.0000093663
+    1    7         0.0883538492
+    2    7        -0.0276903511
+    3    7        -0.0000103972
+    4    7        -1.6350799915
+    5    7         1.2551351178
+    6    7         0.0385452359
+    7    7        -6.2140408516
+    8    7        -0.0000032194
+    1    8        -0.0000200517
+    2    8        -0.0000111922
+    3    8         2.2738830627
+    4    8        -0.0000380966
+    5    8        -0.0000251285
+    6    8        -0.0000093663
+    7    8        -0.0000032194
+    8    8        -5.4680099397
+ end_one_electron_integrals
+ begin_two_electron_integrals
+    1    1    1    1        4.8397525274
+    2    1    1    1       -0.0652167361
+    2    1    2    1        0.0164530775
+    3    1    1    1       -0.0000173400
+    3    1    2    1        0.0000000238
+    3    1    3    1        0.0250944479
+    3    1    2    2       -0.0000020013
+    4    1    1    1       -0.1139770423
+    4    1    2    1       -0.0007646986
+    4    1    3    1        0.0000004444
+    4    1    4    1        0.0214595585
+    4    1    2    2       -0.0142664899
+    4    1    3    2       -0.0000003285
+    4    1    3    3       -0.0036089089
+    5    1    1    1       -0.0800206560
+    5    1    2    1       -0.0005188105
+    5    1    3    1        0.0000003136
+    5    1    4    1        0.0031756568
+    5    1    5    1        0.0190400584
+    5    1    2    2       -0.0099989757
+    5    1    3    2       -0.0000002288
+    5    1    4    2       -0.0002883906
+    5    1    3    3       -0.0025387792
+    5    1    4    3       -0.0000000002
+    5    1    4    4       -0.0018745447
+    6    1    1    1       -0.2286204625
+    6    1    2    1        0.0007612238
+    6    1    3    1        0.0000013278
+    6    1    4    1        0.0242084570
+    6    1    5    1        0.0271262097
+    6    1    6    1        0.0579422483
+    6    1    2    2       -0.0276895447
+    6    1    3    2       -0.0000004588
+    6    1    4    2        0.0124585657
+    6    1    5    2        0.0187137558
+    6    1    3    3       -0.0054481238
+    6    1    4    3        0.0000005855
+    6    1    5    3        0.0000008134
+    6    1    4    4        0.0051044830
+    6    1    5    4        0.0072398131
+    6    1    5    5        0.0087267743
+    7    1    1    1       -0.0711494601
+    7    1    2    1        0.0002179183
+    7    1    3    1        0.0000004364
+    7    1    4    1        0.0246538490
+    7    1    5    1       -0.0157385774
+    7    1    6    1        0.0032366535
+    7    1    7    1        0.0493720646
+    7    1    2    2       -0.0086503855
+    7    1    3    2       -0.0000001229
+    7    1    4    2        0.0208202057
+    7    1    5    2       -0.0180836186
+    7    1    6    2       -0.0030743443
+    7    1    3    3       -0.0016584881
+    7    1    4    3        0.0000008716
+    7    1    5    3       -0.0000007075
+    7    1    6    3       -0.0000001203
+    7    1    4    4        0.0156468535
+    7    1    5    4       -0.0027617949
+    7    1    6    4        0.0045232485
+    7    1    5    5       -0.0111430158
+    7    1    6    5       -0.0058477261
+    7    1    6    6       -0.0057216339
+    8    1    1    1        0.0000161919
+    8    1    2    1        0.0000001412
+    8    1    3    1       -0.0362614424
+    8    1    4    1        0.0000001082
+    8    1    5    1        0.0000000507
+    8    1    6    1       -0.0000005092
+    8    1    7    1       -0.0000001582
+    8    1    8    1        0.0534589338
+    8    1    2    2        0.0000023900
+    8    1    3    2       -0.0351367346
+    8    1    4    2        0.0000010135
+    8    1    5    2        0.0000006864
+    8    1    6    2        0.0000009550
+    8    1    7    2        0.0000002977
+    8    1    3    3       -0.0000024374
+    8    1    4    3       -0.0087769190
+    8    1    5    3       -0.0061802929
+    8    1    6    3       -0.0126219087
+    8    1    7    3       -0.0039201912
+    8    1    4    4        0.0000008470
+    8    1    5    4        0.0000002549
+    8    1    6    4        0.0000005894
+    8    1    7    4        0.0000003214
+    8    1    5    5        0.0000006411
+    8    1    6    5        0.0000004903
+    8    1    7    5       -0.0000000440
+    8    1    6    6        0.0000011569
+    8    1    7    6        0.0000001762
+    8    1    7    7        0.0000006570
+    2    2    1    1        1.0538737380
+    2    2    2    1        0.0219642509
+    2    2    2    2        0.8492421428
+    3    2    1    1        0.0000016454
+    3    2    2    1       -0.0000002507
+    3    2    3    1        0.0191010446
+    3    2    2    2       -0.0000057736
+    3    2    3    2        0.1290881488
+    4    2    1    1       -0.0085792534
+    4    2    2    1       -0.0023664383
+    4    2    3    1       -0.0000002337
+    4    2    4    1        0.0125061910
+    4    2    2    2       -0.0543297127
+    4    2    3    2       -0.0000037571
+    4    2    4    2        0.0815190045
+    4    2    3    3        0.0105011787
+    5    2    1    1       -0.0057460685
+    5    2    2    1       -0.0016443160
+    5    2    3    1       -0.0000001640
+    5    2    4    1       -0.0003010694
+    5    2    5    1        0.0126189333
+    5    2    2    2       -0.0378998004
+    5    2    3    2       -0.0000026271
+    5    2    4    2       -0.0158736118
+    5    2    5    2        0.0920177961
+    5    2    3    3        0.0073965958
+    5    2    4    3       -0.0000008723
+    5    2    4    4       -0.0153166274
+    6    2    1    1        0.0129862116
+    6    2    2    1       -0.0033075921
+    6    2    3    1       -0.0000003198
+    6    2    4    1        0.0067397398
+    6    2    5    1        0.0107257236
+    6    2    6    1        0.0197084684
+    6    2    2    2       -0.0287653912
+    6    2    3    2       -0.0000027388
+    6    2    4    2        0.0177826480
+    6    2    5    2        0.0382182665
+    6    2    6    2        0.0349861562
+    6    2    3    3        0.0170851909
+    6    2    4    3        0.0000002045
+    6    2    5    3        0.0000010195
+    6    2    4    4        0.0183110205
+    6    2    5    4        0.0108120608
+    6    2    5    5        0.0246968085
+    7    2    1    1        0.0038008556
+    7    2    2    1       -0.0010483169
+    7    2    3    1       -0.0000000870
+    7    2    4    1        0.0121407298
+    7    2    5    1       -0.0109008600
+    7    2    6    1       -0.0030435245
+    7    2    7    1        0.0288013393
+    7    2    2    2       -0.0087765898
+    7    2    3    2       -0.0000008053
+    7    2    4    2        0.0477744521
+    7    2    5    2       -0.0484398734
+    7    2    6    2       -0.0102039956
+    7    2    7    2        0.0641562876
+    7    2    3    3        0.0052529637
+    7    2    4    3        0.0000015163
+    7    2    5    3       -0.0000017372
+    7    2    6    3       -0.0000004943
+    7    2    4    4        0.0269271665
+    7    2    5    4       -0.0043815567
+    7    2    6    4        0.0102280081
+    7    2    5    5       -0.0139646450
+    7    2    6    5       -0.0062347960
+    7    2    6    6       -0.0025965228
+    8    2    1    1        0.0000026025
+    8    2    2    1        0.0000004468
+    8    2    3    1       -0.0189869142
+    8    2    4    1        0.0000004929
+    8    2    5    1        0.0000003320
+    8    2    6    1        0.0000005553
+    8    2    7    1        0.0000001745
+    8    2    8    1        0.0269675187
+    8    2    2    2        0.0000039734
+    8    2    3    2       -0.0526754875
+    8    2    4    2        0.0000014954
+    8    2    5    2        0.0000010079
+    8    2    6    2        0.0000017754
+    8    2    7    2        0.0000005588
+    8    2    8    2        0.0455236922
+    8    2    3    3       -0.0000030495
+    8    2    4    3       -0.0087476667
+    8    2    5    3       -0.0062010573
+    8    2    6    3       -0.0164957124
+    8    2    7    3       -0.0051040899
+    8    2    4    4        0.0000012917
+    8    2    5    4        0.0000002484
+    8    2    6    4        0.0000008688
+    8    2    7    4        0.0000004489
+    8    2    5    5        0.0000010873
+    8    2    6    5        0.0000007119
+    8    2    7    5       -0.0000000352
+    8    2    6    6        0.0000011675
+    8    2    7    6        0.0000002741
+    8    2    7    7        0.0000003695
+    3    3    1    1        1.0146495062
+    3    3    2    1        0.0186351065
+    3    3    3    1        0.0000011519
+    3    3    2    2        0.7149074052
+    3    3    3    2        0.0000100069
+    3    3    3    3        0.7276485581
+    4    3    1    1        0.0000006779
+    4    3    2    1       -0.0000002107
+    4    3    3    1        0.0053080877
+    4    3    4    1        0.0000005978
+    4    3    2    2       -0.0000041586
+    4    3    3    2        0.0254010237
+    4    3    4    2        0.0000017340
+    4    3    3    3        0.0000028626
+    4    3    4    3        0.0376091810
+    5    3    1    1        0.0000005056
+    5    3    2    1       -0.0000001468
+    5    3    3    1        0.0037341535
+    5    3    4    1       -0.0000000010
+    5    3    5    1        0.0000005938
+    5    3    2    2       -0.0000029052
+    5    3    3    2        0.0179141118
+    5    3    4    2       -0.0000008725
+    5    3    5    2        0.0000023264
+    5    3    3    3        0.0000020270
+    5    3    4    3        0.0058030686
+    5    3    5    3        0.0332965615
+    5    3    4    4       -0.0000004392
+    6    3    1    1        0.0000071514
+    6    3    2    1       -0.0000002559
+    6    3    3    1        0.0088761796
+    6    3    4    1        0.0000002410
+    6    3    5    1        0.0000004259
+    6    3    6    1        0.0000008672
+    6    3    2    2       -0.0000012942
+    6    3    3    2        0.0241894304
+    6    3    4    2        0.0000002203
+    6    3    5    2        0.0000011382
+    6    3    6    2        0.0000007018
+    6    3    3    3        0.0000048927
+    6    3    4    3        0.0149959203
+    6    3    5    3        0.0164526573
+    6    3    6    3        0.0275285848
+    6    3    4    4        0.0000025813
+    6    3    5    4        0.0000006352
+    6    3    5    5        0.0000029608
+    7    3    1    1        0.0000025771
+    7    3    2    1       -0.0000000692
+    7    3    3    1        0.0027586655
+    7    3    4    1        0.0000005014
+    7    3    5    1       -0.0000004784
+    7    3    6    1       -0.0000001328
+    7    3    7    1        0.0000012498
+    7    3    2    2       -0.0000002438
+    7    3    3    2        0.0074944484
+    7    3    4    2        0.0000016907
+    7    3    5    2       -0.0000019555
+    7    3    6    2       -0.0000004982
+    7    3    7    2        0.0000021596
+    7    3    3    3        0.0000016640
+    7    3    4    3        0.0143318499
+    7    3    5    3       -0.0087632926
+    7    3    6    3        0.0022173626
+    7    3    7    3        0.0210481281
+    7    3    4    4        0.0000021873
+    7    3    5    4       -0.0000002622
+    7    3    6    4        0.0000008378
+    7    3    5    5       -0.0000002682
+    7    3    6    5        0.0000001694
+    7    3    6    6        0.0000005711
+    8    3    1    1       -0.5405628657
+    8    3    2    1       -0.0169845850
+    8    3    3    1       -0.0000007923
+    8    3    4    1        0.0043347830
+    8    3    5    1        0.0030360598
+    8    3    6    1        0.0080809650
+    8    3    7    1        0.0025117778
+    8    3    8    1        0.0000014626
+    8    3    2    2       -0.2204982385
+    8    3    3    2       -0.0000040829
+    8    3    4    2        0.0005609687
+    8    3    5    2        0.0002366561
+    8    3    6    2       -0.0109340489
+    8    3    7    2       -0.0033294406
+    8    3    8    2        0.0000023886
+    8    3    3    3       -0.2146976486
+    8    3    4    3       -0.0000006644
+    8    3    5    3       -0.0000004916
+    8    3    6    3       -0.0000033298
+    8    3    7    3       -0.0000011310
+    8    3    8    3        0.1678080050
+    8    3    4    4       -0.1609432517
+    8    3    5    4       -0.0047257629
+    8    3    6    4       -0.0777662249
+    8    3    7    4       -0.0997940178
+    8    3    5    5       -0.1566419091
+    8    3    6    5       -0.1000615118
+    8    3    7    5        0.0764196974
+    8    3    6    6       -0.1851596648
+    8    3    7    6        0.0024850486
+    8    3    7    7       -0.1933293132
+    4    4    1    1        0.9105514648
+    4    4    2    1        0.0139898602
+    4    4    3    1       -0.0000004783
+    4    4    4    1        0.0060037528
+    4    4    2    2        0.6273184628
+    4    4    3    2       -0.0000002683
+    4    4    4    2        0.0786713723
+    4    4    3    3        0.6248460335
+    4    4    4    3        0.0000033191
+    4    4    4    4        0.7698377628
+    5    4    1    1        0.0186422673
+    5    4    2    1       -0.0003995972
+    5    4    3    1       -0.0000000458
+    5    4    4    1        0.0024722812
+    5    4    5    1        0.0039075301
+    5    4    2    2       -0.0114723549
+    5    4    3    2       -0.0000008005
+    5    4    4    2       -0.0036301006
+    5    4    5    2        0.0227986865
+    5    4    3    3        0.0086505814
+    5    4    4    3       -0.0000000885
+    5    4    5    3        0.0000009325
+    5    4    4    4       -0.0058409983
+    5    4    5    4        0.0369376323
+    6    4    1    1        0.3012428867
+    6    4    2    1        0.0060919136
+    6    4    3    1       -0.0000003889
+    6    4    4    1        0.0058420567
+    6    4    5    1        0.0012280504
+    6    4    6    1        0.0056640995
+    6    4    2    2        0.1104276076
+    6    4    3    2        0.0000000503
+    6    4    4    2        0.0061775189
+    6    4    5    2        0.0084263679
+    6    4    6    2        0.0158240237
+    6    4    3    3        0.1128159625
+    6    4    4    3        0.0000005332
+    6    4    5    3        0.0000005076
+    6    4    6    3        0.0000017079
+    6    4    4    4        0.0923147138
+    6    4    5    4        0.0224024591
+    6    4    6    4        0.0841865473
+    6    4    5    5        0.0958063093
+    7    4    1    1        0.3846425890
+    7    4    2    1        0.0106934502
+    7    4    3    1       -0.0000004077
+    7    4    4    1        0.0023377771
+    7    4    5    1       -0.0046845602
+    7    4    6    1       -0.0046735593
+    7    4    7    1        0.0045062642
+    7    4    2    2        0.1691786815
+    7    4    3    2        0.0000013272
+    7    4    4    2       -0.0093201197
+    7    4    5    2        0.0038454272
+    7    4    6    2        0.0091260120
+    7    4    7    2        0.0122612434
+    7    4    3    3        0.1443028410
+    7    4    4    3        0.0000000329
+    7    4    5    3        0.0000002390
+    7    4    6    3        0.0000015100
+    7    4    7    3        0.0000009022
+    7    4    4    4        0.0897589958
+    7    4    5    4        0.0085750033
+    7    4    6    4        0.0881599932
+    7    4    7    4        0.1414998531
+    7    4    5    5        0.1243170550
+    7    4    6    5        0.0545310992
+    7    4    6    6        0.1304040680
+    8    4    1    1        0.0000083213
+    8    4    2    1        0.0000005098
+    8    4    3    1       -0.0039597495
+    8    4    4    1       -0.0000002822
+    8    4    5    1        0.0000000123
+    8    4    6    1       -0.0000002821
+    8    4    7    1       -0.0000003610
+    8    4    8    1        0.0050480207
+    8    4    2    2        0.0000042068
+    8    4    3    2       -0.0044753942
+    8    4    4    2        0.0000001680
+    8    4    5    2        0.0000000527
+    8    4    6    2        0.0000003216
+    8    4    7    2       -0.0000000813
+    8    4    8    2        0.0053438279
+    8    4    3    3        0.0000027006
+    8    4    4    3       -0.0074928716
+    8    4    5    3       -0.0015342670
+    8    4    6    3       -0.0126169515
+    8    4    7    3       -0.0130371980
+    8    4    8    3       -0.0000017216
+    8    4    4    4        0.0000034458
+    8    4    5    4        0.0000000704
+    8    4    6    4        0.0000011401
+    8    4    7    4        0.0000013890
+    8    4    8    4        0.0160532670
+    8    4    5    5        0.0000027552
+    8    4    6    5        0.0000017368
+    8    4    7    5       -0.0000010367
+    8    4    6    6        0.0000031264
+    8    4    7    6        0.0000001066
+    8    4    7    7        0.0000033503
+    5    5    1    1        0.8933958756
+    5    5    2    1        0.0141979414
+    5    5    3    1       -0.0000004415
+    5    5    4    1       -0.0022261755
+    5    5    5    1        0.0044759835
+    5    5    2    2        0.6332180289
+    5    5    3    2        0.0000002884
+    5    5    4    2        0.0062934686
+    5    5    5    2        0.0742999508
+    5    5    3    3        0.6167142665
+    5    5    4    3        0.0000004285
+    5    5    5    3        0.0000030479
+    5    5    4    4        0.5825054223
+    5    5    5    4        0.0360618906
+    5    5    5    5        0.7445057060
+    6    5    1    1        0.3861972856
+    6    5    2    1        0.0095342448
+    6    5    3    1       -0.0000004458
+    6    5    4    1       -0.0015153172
+    6    5    5    1        0.0062467594
+    6    5    6    1        0.0035170611
+    6    5    2    2        0.1593301171
+    6    5    3    2        0.0000008245
+    6    5    4    2        0.0067699879
+    6    5    5    2       -0.0061964436
+    6    5    6    2        0.0192864508
+    6    5    3    3        0.1454535055
+    6    5    4    3        0.0000005185
+    6    5    5    3        0.0000000970
+    6    5    6    3        0.0000020141
+    6    5    4    4        0.1397958124
+    6    5    5    4        0.0028671232
+    6    5    6    4        0.0674327268
+    6    5    5    5        0.0863629624
+    6    5    6    5        0.1497507390
+    7    5    1    1       -0.2934386642
+    7    5    2    1       -0.0095195683
+    7    5    3    1        0.0000002735
+    7    5    4    1        0.0042112588
+    7    5    5    1        0.0014150047
+    7    5    6    1        0.0071327231
+    7    5    7    1        0.0036618124
+    7    5    2    2       -0.1428749325
+    7    5    3    2       -0.0000016000
+    7    5    4    2        0.0090259072
+    7    5    5    2        0.0089989077
+    7    5    6    2       -0.0045219316
+    7    5    7    2        0.0002342877
+    7    5    3    3       -0.1107071148
+    7    5    4    3        0.0000001871
+    7    5    5    3        0.0000001516
+    7    5    6    3       -0.0000008998
+    7    5    7    3       -0.0000003084
+    7    5    4    4       -0.0769466694
+    7    5    5    4        0.0104563225
+    7    5    6    4       -0.0389231960
+    7    5    7    4       -0.0685012917
+    7    5    5    5       -0.0745748233
+    7    5    6    5       -0.0832124421
+    7    5    7    5        0.0770912145
+    7    5    6    6       -0.0686236197
+    8    5    1    1        0.0000054507
+    8    5    2    1        0.0000003458
+    8    5    3    1       -0.0027946387
+    8    5    4    1        0.0000000186
+    8    5    5    1       -0.0000002911
+    8    5    6    1       -0.0000003538
+    8    5    7    1        0.0000002767
+    8    5    8    1        0.0035654954
+    8    5    2    2        0.0000027900
+    8    5    3    2       -0.0031870212
+    8    5    4    2        0.0000000540
+    8    5    5    2        0.0000001387
+    8    5    6    2        0.0000001153
+    8    5    7    2        0.0000002883
+    8    5    8    2        0.0038076016
+    8    5    3    3        0.0000017532
+    8    5    4    3       -0.0015341673
+    8    5    5    3       -0.0063082661
+    8    5    6    3       -0.0143108988
+    8    5    7    3        0.0084708226
+    8    5    8    3       -0.0000010916
+    8    5    4    4        0.0000017166
+    8    5    5    4        0.0000002674
+    8    5    6    4        0.0000010117
+    8    5    7    4        0.0000010906
+    8    5    8    4        0.0012823601
+    8    5    5    5        0.0000024230
+    8    5    6    5        0.0000006785
+    8    5    7    5       -0.0000007149
+    8    5    8    5        0.0151314607
+    8    5    6    6        0.0000022674
+    8    5    7    6       -0.0000001971
+    8    5    7    7        0.0000020319
+    6    6    1    1        1.0628977677
+    6    6    2    1        0.0162188024
+    6    6    3    1       -0.0000007231
+    6    6    4    1        0.0027962621
+    6    6    5    1        0.0072371659
+    6    6    6    1        0.0146129141
+    6    6    2    2        0.6050641605
+    6    6    3    2       -0.0000000487
+    6    6    4    2        0.0289438066
+    6    6    5    2        0.0599368124
+    6    6    6    2        0.0346758767
+    6    6    3    3        0.6213876545
+    6    6    4    3        0.0000019692
+    6    6    5    3        0.0000031073
+    6    6    6    3        0.0000043290
+    6    6    4    4        0.6301099457
+    6    6    5    4        0.0489225052
+    6    6    6    4        0.1257577365
+    6    6    5    5        0.7002530238
+    6    6    6    5        0.1146161452
+    6    6    6    6        0.7472872874
+    7    6    1    1       -0.0080588797
+    7    6    2    1       -0.0018527641
+    7    6    3    1       -0.0000000024
+    7    6    4    1        0.0070971734
+    7    6    5    1       -0.0027281347
+    7    6    6    1        0.0017970798
+    7    6    7    1        0.0156676439
+    7    6    2    2       -0.0186465070
+    7    6    3    2       -0.0000005247
+    7    6    4    2        0.0354987095
+    7    6    5    2       -0.0331527312
+    7    6    6    2        0.0008310997
+    7    6    7    2        0.0192829027
+    7    6    3    3       -0.0021788636
+    7    6    4    3        0.0000017135
+    7    6    5    3       -0.0000013215
+    7    6    6    3        0.0000000427
+    7    6    7    3        0.0000012966
+    7    6    4    4        0.0776989431
+    7    6    5    4       -0.0117221589
+    7    6    6    4        0.0004402360
+    7    6    7    4       -0.0248896927
+    7    6    5    5       -0.0692025171
+    7    6    6    5        0.0267435247
+    7    6    7    5        0.0065607973
+    7    6    6    6       -0.0309781810
+    7    6    7    6        0.0776422145
+    8    6    1    1        0.0000024847
+    8    6    2    1        0.0000004776
+    8    6    3    1       -0.0089658741
+    8    6    4    1       -0.0000001377
+    8    6    5    1       -0.0000002933
+    8    6    6    1       -0.0000005581
+    8    6    7    1        0.0000001027
+    8    6    8    1        0.0141762933
+    8    6    2    2        0.0000041997
+    8    6    3    2       -0.0333573295
+    8    6    4    2        0.0000006007
+    8    6    5    2       -0.0000000306
+    8    6    6    2       -0.0000000115
+    8    6    7    2        0.0000004359
+    8    6    8    2        0.0132106310
+    8    6    3    3       -0.0000031061
+    8    6    4    3       -0.0224787679
+    8    6    5    3       -0.0238575446
+    8    6    6    3       -0.0209389025
+    8    6    7    3       -0.0017205690
+    8    6    8    3        0.0000004276
+    8    6    4    4        0.0000008563
+    8    6    5    4        0.0000003026
+    8    6    6    4        0.0000003591
+    8    6    7    4        0.0000002808
+    8    6    8    4        0.0061827091
+    8    6    5    5        0.0000002897
+    8    6    6    5        0.0000003146
+    8    6    7    5       -0.0000001452
+    8    6    8    5        0.0069815255
+    8    6    6    6        0.0000002165
+    8    6    7    6        0.0000000895
+    8    6    8    6        0.0348342240
+    8    6    7    7        0.0000006570
+    7    7    1    1        1.0927501685
+    7    7    2    1        0.0217131047
+    7    7    3    1       -0.0000007034
+    7    7    4    1       -0.0023477326
+    7    7    5    1       -0.0069469578
+    7    7    6    1       -0.0088384120
+    7    7    7    1        0.0076800051
+    7    7    2    2        0.6616003392
+    7    7    3    2        0.0000015780
+    7    7    4    2        0.0430896210
+    7    7    5    2       -0.0097197668
+    7    7    6    2        0.0083397652
+    7    7    7    2        0.0154380513
+    7    7    3    3        0.6298057153
+    7    7    4    3        0.0000021888
+    7    7    5    3       -0.0000002351
+    7    7    6    3        0.0000026550
+    7    7    7    3        0.0000018488
+    7    7    4    4        0.6999820352
+    7    7    5    4       -0.0232168224
+    7    7    6    4        0.0845338236
+    7    7    7    4        0.1162757280
+    7    7    5    5        0.6085498976
+    7    7    6    5        0.1419334310
+    7    7    7    5       -0.1093051795
+    7    7    6    6        0.6379051655
+    7    7    7    6        0.0352820144
+    7    7    7    7        0.7371387820
+    8    7    1    1        0.0000008134
+    8    7    2    1        0.0000001498
+    8    7    3    1       -0.0027884962
+    8    7    4    1       -0.0000003637
+    8    7    5    1        0.0000003628
+    8    7    6    1        0.0000001023
+    8    7    7    1       -0.0000008660
+    8    7    8    1        0.0044037240
+    8    7    2    2        0.0000013336
+    8    7    3    2       -0.0103407827
+    8    7    4    2       -0.0000005282
+    8    7    5    2        0.0000010073
+    8    7    6    2        0.0000004363
+    8    7    7    2       -0.0000012909
+    8    7    8    2        0.0040838963
+    8    7    3    3       -0.0000009734
+    8    7    4    3       -0.0205171701
+    8    7    5    3        0.0117389963
+    8    7    6    3       -0.0017295859
+    8    7    7    3       -0.0158183144
+    8    7    8    3        0.0000001257
+    8    7    4    4       -0.0000001188
+    8    7    5    4        0.0000002345
+    8    7    6    4        0.0000000455
+    8    7    7    4        0.0000000463
+    8    7    8    4        0.0063488991
+    8    7    5    5        0.0000005619
+    8    7    6    5        0.0000002095
+    8    7    7    5       -0.0000000427
+    8    7    8    5       -0.0040975905
+    8    7    6    6        0.0000004631
+    8    7    7    6       -0.0000005062
+    8    7    8    6        0.0033646802
+    8    7    7    7       -0.0000001287
+    8    7    8    7        0.0252681744
+    8    8    1    1        1.0367499965
+    8    8    2    1        0.0197519440
+    8    8    3    1        0.0000006278
+    8    8    4    1       -0.0062875025
+    8    8    5    1       -0.0044023268
+    8    8    6    1       -0.0105802527
+    8    8    7    1       -0.0032801004
+    8    8    8    1       -0.0000017543
+    8    8    2    2        0.6268192361
+    8    8    3    2        0.0000071655
+    8    8    4    2        0.0055693896
+    8    8    5    2        0.0040000159
+    8    8    6    2        0.0111975120
+    8    8    7    2        0.0033793038
+    8    8    8    2       -0.0000019240
+    8    8    3    3        0.6364746736
+    8    8    4    3        0.0000012935
+    8    8    5    3        0.0000009619
+    8    8    6    3        0.0000033203
+    8    8    7    3        0.0000011408
+    8    8    8    3       -0.1941715971
+    8    8    4    4        0.5568847224
+    8    8    5    4        0.0067559044
+    8    8    6    4        0.0989152658
+    8    8    7    4        0.1270331847
+    8    8    8    4        0.0000028628
+    8    8    5    5        0.5505460343
+    8    8    6    5        0.1276502956
+    8    8    7    5       -0.0975496157
+    8    8    8    5        0.0000018714
+    8    8    6    6        0.5732352455
+    8    8    7    6       -0.0024403076
+    8    8    8    6       -0.0000015344
+    8    8    7    7        0.5822298206
+    8    8    8    7       -0.0000004527
+    8    8    8    8        0.5968955270
+ end_two_electron_integrals
+ enrep_tce =    9.0547756948714522     
+  EHF(A)             =       -76.04950816
+  EHF(total)         =       -76.04950816
+  Shift (HFtot-HFA)  =         0.00000000
+ Cpu & wall time / sec            0.2            0.2
+ T1-number-of-tasks                   15
+
+ t1 file size   =               15
+ t1 file name   = ./H2O.t1
+ t1 file handle =       -998
+ T2-number-of-boxes                  315
+
+ t2 file size   =              315
+ t2 file name   = ./H2O.t2
+ t2 file handle =       -996
+CCSD iterations
+ ---------------------------------------------------------
+ Iter          Residuum       Correlation     Cpu    Wall 
+ ---------------------------------------------------------
+NEW TASK SCHEDULING
+CCSD_T1_NTS --- OK
+CCSD_T2_NTS --- OK
+    1   0.7701802858111  -0.2347640347007     1.9     2.6
+    2   1.2704537395257   0.1281694332603     2.0     2.6
+    3   2.1451247528798  -0.4664365288097     1.8     2.6
+    4   3.6976962743712   0.5204395875208     1.9     2.6
+    5   6.1882104665433  -1.1544527513954     1.9     2.6
+ MICROCYCLE DIIS UPDATE:                    5                    5
+    6   0.0161328790187  -0.0930696241435     2.0     2.8
+    7   0.0162529252194  -0.0973076331903     2.0     2.7
+    8   0.0218701227041  -0.0911211973275     2.0     2.6
+    9   0.0371039739493  -0.0995979451804     1.8     2.7
+   10   0.0697832582078  -0.0809032106136     1.9     2.6
+ MICROCYCLE DIIS UPDATE:                   10                    5
+   11   0.0003285574061  -0.0949682369819     2.0     2.7
+   12   0.0004558727892  -0.0950677319602     1.9     2.7
+   13   0.0007181429783  -0.0949129685831     2.0     2.7
+   14   0.0011960135500  -0.0951570197838     2.1     2.9
+   15   0.0020459165435  -0.0947664325652     2.1     2.9
+ MICROCYCLE DIIS UPDATE:                   15                    5
+   16   0.0000049524552  -0.0950076172371     2.0     2.6
+   17   0.0000046149965  -0.0950069884059     2.6     3.4
+   18   0.0000074714936  -0.0950083003204     2.4     3.5
+   19   0.0000132035620  -0.0950058421792     2.8     3.9
+   20   0.0000238725469  -0.0950102779768     2.7     3.8
+ MICROCYCLE DIIS UPDATE:                   20                    5
+   21   0.0000001500480  -0.0950074206704     2.7     3.8
+   22   0.0000001887686  -0.0950074535613     2.7     3.8
+   23   0.0000003321051  -0.0950074021918     2.8     3.8
+   24   0.0000006130635  -0.0950074858912     2.9     3.8
+   25   0.0000011500207  -0.0950073470975     2.7     3.9
+ MICROCYCLE DIIS UPDATE:                   25                    5
+   26   0.0000000041648  -0.0950074339892     2.7     3.8
+ -----------------------------------------------------------------
+ Iterations converged
+ CCSD correlation energy / hartree =        -0.095007433989151
+ CCSD total energy / hartree       =       -76.144515596499417
+
+ Singles contributions
+
+ Doubles contributions
+     6a   (alpha)     7a   (alpha) ---     4a   (alpha)     5a   (alpha)        0.0229839470
+     6a   (alpha)     8a   (alpha) ---     3a   (alpha)     5a   (alpha)       -0.0237741491
+     6a   (alpha)     6a   (beta ) ---     4a   (alpha)     4a   (beta )       -0.0316341233
+     6a   (alpha)     6a   (beta ) ---     4a   (alpha)     5a   (beta )       -0.0239450455
+     6a   (alpha)     6a   (beta ) ---     5a   (alpha)     4a   (beta )       -0.0239450455
+     6a   (alpha)     6a   (beta ) ---     5a   (alpha)     5a   (beta )       -0.0615511835
+     6a   (alpha)     7a   (beta ) ---     4a   (alpha)     4a   (beta )       -0.0350878516
+     6a   (alpha)     7a   (beta ) ---     5a   (alpha)     5a   (beta )        0.0333425977
+     6a   (alpha)     8a   (beta ) ---     4a   (alpha)     3a   (beta )        0.0249509999
+     6a   (alpha)     8a   (beta ) ---     5a   (alpha)     3a   (beta )        0.0324011194
+     7a   (alpha)     8a   (alpha) ---     3a   (alpha)     4a   (alpha)       -0.0240096816
+     7a   (alpha)     6a   (beta ) ---     4a   (alpha)     4a   (beta )       -0.0350878516
+     7a   (alpha)     6a   (beta ) ---     5a   (alpha)     5a   (beta )        0.0333425977
+     7a   (alpha)     7a   (beta ) ---     4a   (alpha)     4a   (beta )       -0.0562284953
+     7a   (alpha)     7a   (beta ) ---     4a   (alpha)     5a   (beta )        0.0259129850
+     7a   (alpha)     7a   (beta ) ---     5a   (alpha)     4a   (beta )        0.0259129850
+     7a   (alpha)     7a   (beta ) ---     5a   (alpha)     5a   (beta )       -0.0291753744
+     7a   (alpha)     8a   (beta ) ---     4a   (alpha)     3a   (beta )        0.0322203589
+     7a   (alpha)     8a   (beta ) ---     5a   (alpha)     3a   (beta )       -0.0248938364
+     8a   (alpha)     6a   (beta ) ---     3a   (alpha)     4a   (beta )        0.0249509999
+     8a   (alpha)     6a   (beta ) ---     3a   (alpha)     5a   (beta )        0.0324011194
+     8a   (alpha)     7a   (beta ) ---     3a   (alpha)     4a   (beta )        0.0322203589
+     8a   (alpha)     7a   (beta ) ---     3a   (alpha)     5a   (beta )       -0.0248938364
+     8a   (alpha)     8a   (beta ) ---     3a   (alpha)     3a   (beta )       -0.0606375345
+ Ground state specification:
+ exp(T)|Ref>~(1+T)|Ref>
+ ------- a(p)+/a(q) strings ----------
+
+ singles norm
+
+ doubles norm
+
+ Reference string
+   1.0000000000000000      :(1a)+ (2a)+ (3a)+ (4a)+ (5a)+ (1b)+ (2b)+ (3b)+ (4b)+ (5b)+ |0>
+
+ Singles strings
+
+ Doubles strings
+ -------------------------------------
+
+ Parallel integral file used       3 records with       0 large values
+
+
+ Task  times  cpu:       58.9s     wall:       81.7s
+
+
+                                NWChem Input Module
+                                -------------------
+
+
+ Summary of allocated global arrays
+-----------------------------------
+  No active global arrays
+
+
+MA_summarize_allocated_blocks: starting scan ...
+MA_summarize_allocated_blocks: scan completed: 0 heap blocks, 0 stack blocks
+MA usage statistics:
+
+	allocation statistics:
+					      heap	     stack
+					      ----	     -----
+	current number of blocks	         0	         0
+	maximum number of blocks	        18	        42
+	current total bytes		         0	         0
+	maximum total bytes		   5323032	  24073272
+	maximum total K-bytes		      5324	     24074
+	maximum total M-bytes		         6	        25
+
+
+                                     CITATION
+                                     --------
+                Please cite the following reference when publishing
+                           results obtained with NWChem:
+
+          E. Apra, E. J. Bylaska, W. A. de Jong, N. Govind, K. Kowalski,
+       T. P. Straatsma, M. Valiev, H. J. J. van Dam, Y. Alexeev, J. Anchell,
+       V. Anisimov, F. W. Aquino, R. Atta-Fynn, J. Autschbach, N. P. Bauman,
+     J. C. Becca, D. E. Bernholdt, K. Bhaskaran-Nair, S. Bogatko, P. Borowski,
+         J. Boschen, J. Brabec, A. Bruner, E. Cauet, Y. Chen, G. N. Chuev,
+      C. J. Cramer, J. Daily, M. J. O. Deegan, T. H. Dunning Jr., M. Dupuis,
+   K. G. Dyall, G. I. Fann, S. A. Fischer, A. Fonari, H. Fruchtl, L. Gagliardi,
+      J. Garza, N. Gawande, S. Ghosh, K. Glaesemann, A. W. Gotz, J. Hammond,
+       V. Helms, E. D. Hermes, K. Hirao, S. Hirata, M. Jacquelin, L. Jensen,
+   B. G. Johnson, H. Jonsson, R. A. Kendall, M. Klemm, R. Kobayashi, V. Konkov,
+      S. Krishnamoorthy, M. Krishnan, Z. Lin, R. D. Lins, R. J. Littlefield,
+      A. J. Logsdail, K. Lopata, W. Ma, A. V. Marenich, J. Martin del Campo,
+   D. Mejia-Rodriguez, J. E. Moore, J. M. Mullin, T. Nakajima, D. R. Nascimento,
+    J. A. Nichols, P. J. Nichols, J. Nieplocha, A. Otero-de-la-Roza, B. Palmer,
+    A. Panyala, T. Pirojsirikul, B. Peng, R. Peverati, J. Pittner, L. Pollack,
+   R. M. Richard, P. Sadayappan, G. C. Schatz, W. A. Shelton, D. W. Silverstein,
+   D. M. A. Smith, T. A. Soares, D. Song, M. Swart, H. L. Taylor, G. S. Thomas,
+            V. Tipparaju, D. G. Truhlar, K. Tsemekhman, T. Van Voorhis,
+      A. Vazquez-Mayagoitia, P. Verma, O. Villa, A. Vishnu, K. D. Vogiatzis,
+        D. Wang, J. H. Weare, M. J. Williamson, T. L. Windus, K. Wolinski,
+        A. T. Wong, Q. Wu, C. Yang, Q. Yu, M. Zacharias, Z. Zhang, Y. Zhao,
+                                and R. J. Harrison
+                        "NWChem: Past, present, and future
+                         J. Chem. Phys. 152, 184102 (2020)
+                               doi:10.1063/5.0004997
+
+                                      AUTHORS
+                                      -------
+  E. Apra, E. J. Bylaska, N. Govind, K. Kowalski, M. Valiev, D. Mejia-Rodriguez,
+       A. Kunitsa, N. P. Bauman, A. Panyala, W. A. de Jong, T. P. Straatsma,
+        H. J. J. van Dam, D. Wang, T. L. Windus, J. Hammond, J. Autschbach,
+    K. Bhaskaran-Nair, J. Brabec, K. Lopata, S. A. Fischer, S. Krishnamoorthy,
+     M. Jacquelin, W. Ma, M. Klemm, O. Villa, Y. Chen, V. Anisimov, F. Aquino,
+    S. Hirata, M. T. Hackler, Eric Hermes, L. Jensen, J. E. Moore, J. C. Becca,
+      V. Konjkov, T. Risthaus, M. Malagoli, A. Marenich, A. Otero-de-la-Roza,
+        J. Mullin, P. Nichols, R. Peverati, J. Pittner, Y. Zhao, P.-D. Fan,
+        A. Fonari, M. J. Williamson, R. J. Harrison, J. R. Rehr, M. Dupuis,
+     D. Silverstein, D. M. A. Smith, J. Nieplocha, V. Tipparaju, M. Krishnan,
+     B. E. Van Kuiken, A. Vazquez-Mayagoitia, M. Swart, Q. Wu, T. Van Voorhis,
+     A. A. Auer, M. Nooijen, L. D. Crosby, E. Brown, G. Cisneros, G. I. Fann,
+   H. Fruchtl, J. Garza, K. Hirao, R. A. Kendall, J. A. Nichols, K. Tsemekhman,
+    K. Wolinski, J. Anchell, D. E. Bernholdt, P. Borowski, T. Clark, D. Clerc,
+   H. Dachsel, M. J. O. Deegan, K. Dyall, D. Elwood, E. Glendening, M. Gutowski,
+   A. C. Hess, J. Jaffe, B. G. Johnson, J. Ju, R. Kobayashi, R. Kutteh, Z. Lin,
+   R. Littlefield, X. Long, B. Meng, T. Nakajima, S. Niu, L. Pollack, M. Rosing,
+   K. Glaesemann, G. Sandrone, M. Stave, H. Taylor, G. Thomas, J. H. van Lenthe,
+                               A. T. Wong, Z. Zhang.
+
+ Total times  cpu:       61.7s     wall:       87.2s

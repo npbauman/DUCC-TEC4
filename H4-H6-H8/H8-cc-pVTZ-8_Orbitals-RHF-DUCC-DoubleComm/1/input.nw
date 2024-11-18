@@ -1,0 +1,48 @@
+
+echo
+start H8
+title "H8"
+
+memory total 180 gb
+
+geometry units bohr
+symmetry c1
+H 0 0 0
+H 0 0 1.94
+H 0 0 3.88
+H 0 0 5.82
+H 0 0 7.76
+H 0 0 9.70
+H 0 0 11.64
+H 0 0 13.58
+end
+
+basis spherical
+  * library cc-pVTZ
+end
+
+scf
+thresh 1e-8
+end
+
+tce
+  2eorb
+  2emet 13
+  ccsd
+  thresh 1e-8
+  maxiter 300
+end
+
+# set tce:print_integrals T
+# set tce:qorb 8
+# set tce:qela 4
+# set tce:qelb 4
+
+set tce:qducc T
+set tce:nactv 4
+set tce:nonhf T
+set tce:ducc_model 6
+
+set tce:printtol 0.02
+
+task tce

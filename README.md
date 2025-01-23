@@ -12,7 +12,7 @@ h(i, j) = h(j, i)
 
 All Terms for DUCC Hamiltonians are printed.
 
-One unique element is printed, and the remainder must be filled in.
+One unique element is printed for the Bare Hamiltonian, and the remainder must be filled in.
 
 **2-Electron integrals (v)**
 
@@ -33,5 +33,5 @@ All Terms for DUCC Hamiltonians are printed.
 
 Bare: V(i, j, k, l) = V(k, l, i, j) = V(j, i, l, k) = V(l, k, j, i) = V(j, i, k, l) = V(i, j, l, k) = V(k, l, j, i) = V(l, k, i, j)
 
-One unique element is printed, and the remainder must be filled in.
+One unique element is printed for the Bare Hamiltonian, and the remainder must be filled in.
 

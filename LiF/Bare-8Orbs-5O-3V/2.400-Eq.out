@@ -1,0 +1,709 @@
+
+ExaChem Git Information
+{
+ Branch: main
+ Commit Hash: 375b493 [375b493dd2cde06c0b0192348936782ced680012]
+ Commit Date: 2025-09-14 16:06:56 -0700
+ Commit Message: add benchmarks for CCSD and (T) to docs
+
+ WARNING: The following ExaChem sources have uncommitted changes at build-time.
+
+ M exachem/cc/ducc/ducc-t_ccsd.hpp
+ M exachem/cc/ducc/qflow-t_ccsd.cpp
+ M exachem/cc/scripts/hamiltonian_extractor/fci_solver.py
+ M exachem/cc/scripts/hamiltonian_extractor/grab_data.py
+
+diff --git a/exachem/cc/ducc/ducc-t_ccsd.hpp b/exachem/cc/ducc/ducc-t_ccsd.hpp
+index 9c93f85..8f0f448 100644
+--- a/exachem/cc/ducc/ducc-t_ccsd.hpp
++++ b/exachem/cc/ducc/ducc-t_ccsd.hpp
+@@ -31,2 +31 @@ template<typename T>
+-std::pair<double, std::vector<std::pair<std::vector<int>, double>>>
+-DUCC_T_QFLOW_Driver(Scheduler& sch, ChemEnv& chem_env, const TiledIndexSpace& MO,
++void DUCC_T_QFLOW_Driver(Scheduler& sch, ChemEnv& chem_env, const TiledIndexSpace& MO,
+diff --git a/exachem/cc/ducc/qflow-t_ccsd.cpp b/exachem/cc/ducc/qflow-t_ccsd.cpp
+index af056e1..15388eb 100644
+--- a/exachem/cc/ducc/qflow-t_ccsd.cpp
++++ b/exachem/cc/ducc/qflow-t_ccsd.cpp
+@@ -250 +250 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-  // TiledIndexSpace&           MO        = chem_env.is_context.MSO;
++  TiledIndexSpace&           MO        = chem_env.is_context.MSO;
+@@ -254,2 +254,2 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-  Tensor<T>                  d_t1      = chem_env.cc_context.d_t1_full;
+-  Tensor<T>                  d_t2      = chem_env.cc_context.d_t2_full;
++  // Tensor<T>                  d_t1      = chem_env.cc_context.d_t1_full;
++  // Tensor<T>                  d_t2      = chem_env.cc_context.d_t2_full;
+@@ -265,2 +265,2 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-  // const TiledIndexSpace& O = MO_AS("occ");
+-  // const TiledIndexSpace& V = MO_AS("virt");
++  const TiledIndexSpace& O = MO("occ");
++  const TiledIndexSpace& V = MO("virt");
+@@ -268,4 +268,4 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-  // Tensor<T> cholVpr_UT = {{N, N, CI}, {SpinPosition::upper, SpinPosition::lower,
+-  // SpinPosition::ignore}}; sch.allocate(cholVpr_UT).execute(); retile_tamm_tensor(cholVpr,
+-  // cholVpr_UT); cholesky_2e::V2Tensors<T>& v2tensors_UT = cholesky_2e::setupV2Tensors<T>(ec,
+-  // cholVpr_UT, ex_hw); free_tensors(cholVpr, cholVpr_UT);
++  // Tensor<T> cholVpr_sub = {{N, N, CI}, {SpinPosition::upper, SpinPosition::lower,
++  // SpinPosition::ignore}}; sch.allocate(cholVpr_sub).execute(); retile_tamm_tensor(cholVpr,
++  // cholVpr_sub); cholesky_2e::V2Tensors<T>& v2tensors_sub = cholesky_2e::setupV2Tensors<T>(ec,
++  // cholVpr_sub, ex_hw); free_tensors(cholVpr, cholVpr_sub);
+@@ -273,3 +273,3 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-  // Tensor<T> dt1_full_ut = Tensor<T>{{V, O}, {1, 1}};
+-  // Tensor<T> dt2_full_ut = Tensor<T>{{V, V, O, O}, {2, 2}};
+-  // sch.allocate(dt1_full_ut, dt2_full_ut).execute();
++  // Global amplitudes are transformed to dense tensors so they can addresses
++  ExecutionContext ec_dense{ec.pg(), DistributionKind::dense,
++                            MemoryManagerKind::ga};
+@@ -276,0 +277,8 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
++  Tensor<T> dt1 = Tensor<T>{{V, O}, {1, 1}};
++  Tensor<T> dt2 = Tensor<T>{{V, V, O, O}, {2, 2}};
++  sch.allocate(dt1, dt2).execute();
++
++  Tensor<T> dt1_global = to_dense_tensor(ec_dense, dt1);
++  Tensor<T> dt2_global = to_dense_tensor(ec_dense, dt2);
++
++  free_tensors(dt1, dt2);
+@@ -315,2 +323,2 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-  // Combine occ_combinations and occ_combinations in all ways
+-  // The are combined with the sum of orbtital energies
++  // Combine occ_combinations and virt_combinations in all ways
++  // They are combined with the sum of orbital energies
+@@ -410 +418 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-      Tensor<T> cholVpr_UT{{N, N, CI},
++      Tensor<T> cholVpr_sub{{N, N, CI},
+@@ -412,5 +420,5 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-      sch.allocate(cholVpr_UT).execute();
+-      retile_tamm_tensor(cholVpr, cholVpr_UT);
+-      cholesky_2e::V2Tensors<T> v2tensors_UT =
+-        cholesky_2e::setupV2Tensors<T>(ec, cholVpr_UT, ex_hw);
+-      free_tensors(cholVpr_UT);
++      sch.allocate(cholVpr_sub).execute();
++      retile_tamm_tensor(cholVpr, cholVpr_sub);
++      cholesky_2e::V2Tensors<T> v2tensors_sub =
++        cholesky_2e::setupV2Tensors<T>(ec, cholVpr_sub, ex_hw);
++      free_tensors(cholVpr_sub);
+@@ -418,3 +426,3 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-      Tensor<T> dt1_full_ut = Tensor<T>{{V, O}, {1, 1}};
+-      Tensor<T> dt2_full_ut = Tensor<T>{{V, V, O, O}, {2, 2}};
+-      sch.allocate(dt1_full_ut, dt2_full_ut).execute();
++      Tensor<T> dt1_sub = Tensor<T>{{V, O}, {1, 1}};
++      Tensor<T> dt2_sub = Tensor<T>{{V, V, O, O}, {2, 2}};
++      sch.allocate(dt1_sub, dt2_sub).execute();
+@@ -423 +431,3 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-      sch(dt1_full_ut() = 0.0)(dt2_full_ut() = 0.0).execute(ex_hw);
++      from_dense_tensor(dt1_global, dt1_sub);
++      from_dense_tensor(dt2_global, dt2_sub);
++      // sch(dt1_sub() = 0.0)(dt2_sub() = 0.0).execute(ex_hw);
+@@ -425,3 +435,3 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-      Tensor<T> d_f1_UT = Tensor<T>{{N, N}, {1, 1}};
+-      sch.allocate(d_f1_UT).execute();
+-      retile_tamm_tensor(d_f1, d_f1_UT);
++      Tensor<T> d_f1_sub = Tensor<T>{{N, N}, {1, 1}};
++      sch.allocate(d_f1_sub).execute();
++      retile_tamm_tensor(d_f1, d_f1_sub);
+@@ -430 +440 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-      DUCC_T_CCSD_Driver<T>(chem_env, ec, MO_AS, dt1_full_ut, dt2_full_ut, d_f1_UT, v2tensors_UT,
++      DUCC_T_CCSD_Driver<T>(chem_env, ec, MO_AS, dt1_sub, dt2_sub, d_f1_sub, v2tensors_sub,
+@@ -433 +443,23 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-      free_tensors(d_f1_UT, dt1_full_ut, dt2_full_ut);
++      // // Get QFlow results
++      // auto& qflow_results = chem_env.sys_data.results["output"]["QFlow"]["results"];
++
++      // // Get XACC ordering
++      // auto xacc_order = qflow_results["xacc_order"].get<std::vector<int>>();
++      // std::cout << "XACC Ordering: ";
++      // for(const auto& idx : xacc_order) {
++      //     std::cout << idx << " ";
++      // }
++      // std::cout << std::endl;
++
++      // // Get amplitudes 
++      // std::cout << "QFlow Amplitudes:" << std::endl;
++      // for(const auto& amp : qflow_results["amplitudes"]) {
++      //     std::cout << "  [";
++      //     for(size_t i = 0; i < amp["indices"].size(); ++i) {
++      //         std::cout << amp["indices"][i];
++      //         if(i < amp["indices"].size() - 1) std::cout << ", ";
++      //     }
++      //     std::cout << "] -> " << amp["value"].get<double>() << std::endl;
++      // }
++      
++      free_tensors(d_f1_sub, dt1_sub, dt2_sub);
+@@ -438 +470,3 @@ void ducc_qflow_driver(ExecutionContext& ec, ChemEnv& chem_env) {
+-  free_tensors(cholVpr, d_t1, d_t2, d_f1);
++  // free_tensors(cholVpr, d_t1, d_t2, d_f1);
++  free_tensors(cholVpr, d_f1);
++  Tensor<T>::deallocate(dt1_global, dt2_global);
+@@ -446,7 +480,6 @@ template<typename T>
+-std::pair<double, std::vector<std::pair<std::vector<int>, double>>>
+-DUCC_T_QFLOW_Driver(Scheduler& sch, ChemEnv& chem_env, const TiledIndexSpace& MO,
+-                    const Tensor<T>& ftij, const Tensor<T>& ftia, const Tensor<T>& ftab,
+-                    const Tensor<T>& vtijkl, const Tensor<T>& vtijka, const Tensor<T>& vtaijb,
+-                    const Tensor<T>& vtijab, const Tensor<T>& vtiabc, const Tensor<T>& vtabcd,
+-                    ExecutionHW ex_hw, T shift, IndexVector& occ_int_vec, IndexVector& virt_int_vec,
+-                    string& pos_str) {
++void DUCC_T_QFLOW_Driver(Scheduler& sch, ChemEnv& chem_env, const TiledIndexSpace& MO,
++                          const Tensor<T>& ftij, const Tensor<T>& ftia, const Tensor<T>& ftab,
++                          const Tensor<T>& vtijkl, const Tensor<T>& vtijka, const Tensor<T>& vtaijb,
++                          const Tensor<T>& vtijab, const Tensor<T>& vtiabc, const Tensor<T>& vtabcd,
++                          ExecutionHW ex_hw, T shift, IndexVector& occ_int_vec, IndexVector& virt_int_vec,
++                          string& pos_str) {
+@@ -457,0 +491 @@ DUCC_T_QFLOW_Driver(Scheduler& sch, ChemEnv& chem_env, const TiledIndexSpace& MO
++  SystemData& sys_data = chem_env.sys_data;
+@@ -828 +862 @@ DUCC_T_QFLOW_Driver(Scheduler& sch, ChemEnv& chem_env, const TiledIndexSpace& MO
+-    std::cout << std::endl
++    std::cout << std::setprecision(6) << std::endl
+@@ -834 +868,20 @@ DUCC_T_QFLOW_Driver(Scheduler& sch, ChemEnv& chem_env, const TiledIndexSpace& MO
+-    std::cout << "Final Energy: " << results.first << "" << std::endl;
++    // Store results in sys_data.results for use elsewhere in the code
++    sys_data.results["output"]["QFlow"]["results"]["energy"] = results.first;
++    
++    // Store amplitudes in sys_data.results
++    nlohmann::json amplitudes_json = nlohmann::json::array();
++    for(const auto& pair: results.second) {
++      const std::vector<int>& vec = pair.first;
++      double                  val = pair.second;
++      
++      nlohmann::json amp_entry;
++      amp_entry["indices"] = vec;
++      amp_entry["value"] = val;
++      amplitudes_json.push_back(amp_entry);
++    }
++    sys_data.results["output"]["QFlow"]["results"]["amplitudes"] = amplitudes_json;
++
++    // Store XACC_order in sys_data.results
++    sys_data.results["output"]["QFlow"]["results"]["xacc_order"] = XACC_order;
++
++    std::cout << std::setprecision(10) << "Final Energy: " << results.first << "" << std::endl;
+@@ -853 +905,0 @@ DUCC_T_QFLOW_Driver(Scheduler& sch, ChemEnv& chem_env, const TiledIndexSpace& MO
+-  return results;
+@@ -857,7 +909,6 @@ using T = double;
+-template std::pair<double, std::vector<std::pair<std::vector<int>, double>>>
+-DUCC_T_QFLOW_Driver<T>(Scheduler& sch, ChemEnv& chem_env, const TiledIndexSpace& MO,
+-                       const Tensor<T>& ftij, const Tensor<T>& ftia, const Tensor<T>& ftab,
+-                       const Tensor<T>& vtijkl, const Tensor<T>& vtijka, const Tensor<T>& vtaijb,
+-                       const Tensor<T>& vtijab, const Tensor<T>& vtiabc, const Tensor<T>& vtabcd,
+-                       ExecutionHW ex_hw, T shift, IndexVector& occ_int_vec,
+-                       IndexVector& virt_int_vec, string& pos_str);
++template void DUCC_T_QFLOW_Driver<T>(Scheduler& sch, ChemEnv& chem_env, const TiledIndexSpace& MO,
++                                      const Tensor<T>& ftij, const Tensor<T>& ftia, const Tensor<T>& ftab,
++                                      const Tensor<T>& vtijkl, const Tensor<T>& vtijka, const Tensor<T>& vtaijb,
++                                      const Tensor<T>& vtijab, const Tensor<T>& vtiabc, const Tensor<T>& vtabcd,
++                                      ExecutionHW ex_hw, T shift, IndexVector& occ_int_vec,
++                                      IndexVector& virt_int_vec, string& pos_str);
+diff --git a/exachem/cc/scripts/hamiltonian_extractor/fci_solver.py b/exachem/cc/scripts/hamiltonian_extractor/fci_solver.py
+index 75711ad..cfa11ab 100644
+--- a/exachem/cc/scripts/hamiltonian_extractor/fci_solver.py
++++ b/exachem/cc/scripts/hamiltonian_extractor/fci_solver.py
+@@ -4 +3,0 @@ Full Configuration Interaction (FCI) solver implementation.
+-from pyscf import fci
+@@ -20 +19,5 @@ def parse_fci_vector(ci_vecmat: np.ndarray, orbs: int, electrons: int, threshold
+-    from pyscf.fci import cistring
++    try:
++        from pyscf.fci import cistring
++    except ImportError:
++        raise ImportError("PySCF is required for parsing FCI vectors. Please install it using 'pip install pyscf'.")
++    
+@@ -61,0 +65,6 @@ def solve_fci(data, n_roots: int = 1, threshold: float = 0.001, max_space: int =
++    # Import pyscf only when needed
++    try:
++        from pyscf import fci
++    except ImportError:
++        raise ImportError("PySCF is required for FCI calculations. Please install it using 'pip install pyscf'.")
++    
+diff --git a/exachem/cc/scripts/hamiltonian_extractor/grab_data.py b/exachem/cc/scripts/hamiltonian_extractor/grab_data.py
+index 2a04b34..8d47e3f 100644
+--- a/exachem/cc/scripts/hamiltonian_extractor/grab_data.py
++++ b/exachem/cc/scripts/hamiltonian_extractor/grab_data.py
+@@ -83,2 +83,2 @@ def _extract_output_data(output_file, data):
+-                elif ln_segments[:3] == ['Bare', 'SCF', 'Energy:']:
+-                    bare_scf = float(ln_segments[3])
++                elif ln_segments[:5] == ['Bare', 'Active', 'Space', 'SCF', 'Energy:']:
++                    bare_scf = float(ln_segments[5])
+
+}
+
+
+TAMM Git Information
+{
+ Branch: main
+ Commit Hash: b1c8bd6a [b1c8bd6a1af89df24e4bc132c67dc373da677e99]
+ Commit Date: 2025-09-11 01:49:06 -0700
+ Commit Message: update macos instructions
+}
+
+
+date: Mon Sep 29 16:12:32 2025
+program: "/hpc/home/baum612/code/exachem-dev/build/methods_stage/hpc/home/baum612/code/tamm_install/methods/ExaChem"
+nnodes: 1, nproc_per_node: 1, nproc_total: 1, 
+Memory information
+{
+[Intel(R) Xeon(R) Platinum 8276M CPU @ 2.20GHz] : 
+  CPU memory per node (GiB): 6046
+  Total CPU memory (GiB): 6046
+}
+
+------------------------------------------------------------
+
+Input file provided: /hpc/home/baum612/TESTS/TEC4/DUCC-TEC4/LiF/2.400-Eq.json
+
+{
+  "geometry": {
+    "coordinates": [
+      "Li  0 0 0",
+      "F  0  0.0  3.753360"
+    ],
+    "units": "angstrom"
+  },
+  "common": {
+    "maxiter": 200
+  },
+  "basis": {
+    "basisset": "cc-pVTZ"
+  },
+  "SCF": {
+    "tol_int": 1e-18,
+    "tol_sch": 1e-12,
+    "tol_lindep": 1e-05,
+    "conve": 1e-08,
+    "convd": 1e-07,
+    "scf_type": "restricted"
+  },
+  "CD": {
+    "debug": false,
+    "diagtol": 1e-09
+  },
+  "CC": {
+    "threshold": 1e-08,
+    "nactive_oa": 5,
+    "nactive_ob": 5,
+    "nactive_va": 3,
+    "nactive_vb": 3,
+    "PRINT": {},
+    "ducc_lvl": 0
+  },
+  "TASK": {
+    "ducc": [
+      true,
+      "default"
+    ]
+  }
+}
+
+Output folder & files prefix: 2.400-Eq.cc-pvtz
+
+  Li (lithium)
+  ------------
+          Exponent        Coefficients
+      ----------------  --------------------
+  1 S  5.98800000E+03      0.064619
+  1 S  8.98900000E+02      0.120104
+  1 S  2.05900000E+02      0.204535
+  1 S  5.92400000E+01      0.318977
+  1 S  1.98700000E+01      0.445628
+  1 S  7.40600000E+00      0.531197
+  1 S  2.93000000E+00      0.503573
+  1 S  1.18900000E+00      0.319820
+  1 S  4.79800000E-01      0.078538
+
+  2 S  5.98800000E+03     -0.037675
+  2 S  8.98900000E+02     -0.069659
+  2 S  2.05900000E+02     -0.117469
+  2 S  5.92400000E+01     -0.187176
+  2 S  1.98700000E+01     -0.260910
+  2 S  7.40600000E+00     -0.332441
+  2 S  2.93000000E+00     -0.330149
+  2 S  1.18900000E+00     -0.297802
+  2 S  4.79800000E-01     -0.170456
+
+  3 S  7.50900000E-02      0.102234
+
+  4 S  2.83200000E-02      0.049202
+
+  5 P  3.26600000E+00      0.222451
+  5 P  6.51100000E-01      0.163232
+  5 P  1.69600000E-01      0.134040
+
+  6 P  5.57800000E-02      0.038640
+
+  7 P  2.05000000E-02      0.011057
+
+  8 D  1.87400000E-01      0.087853
+
+  9 D  8.01000000E-02      0.019850
+
+  10 F  1.82900000E-01      0.032206
+
+
+  F (fluorine)
+  ------------
+          Exponent        Coefficients
+      ----------------  --------------------
+  1 S  1.95000000E+04      0.610821
+  1 S  2.92300000E+03      1.138598
+  1 S  6.64500000E+02      1.930203
+  1 S  1.87500000E+02      2.922896
+  1 S  6.06200000E+01      3.655092
+  1 S  2.14200000E+01      3.146693
+  1 S  7.95000000E+00      1.209704
+  1 S  8.81500000E-01     -0.005242
+
+  2 S  1.95000000E+04     -0.234735
+  2 S  2.92300000E+03     -0.440790
+  2 S  6.64500000E+02     -0.750590
+  2 S  1.87500000E+02     -1.175794
+  2 S  6.06200000E+01     -1.575703
+  2 S  2.14200000E+01     -1.694881
+  2 S  7.95000000E+00     -1.017604
+  2 S  8.81500000E-01      0.669219
+
+  3 S  2.25700000E+00      1.312377
+
+  4 S  3.04100000E-01      0.291859
+
+  5 P  4.38800000E+01      6.745828
+  5 P  9.92600000E+00      6.597273
+  5 P  2.93000000E+00      4.359097
+
+  6 P  9.13200000E-01      1.272470
+
+  7 P  2.67200000E-01      0.273833
+
+  8 D  3.10700000E+00     11.967589
+
+  9 D  8.55000000E-01      1.251267
+
+  10 F  1.91700000E+00      6.365818
+
+
+
+Printing Internal Coordinates
+
+------------------------------------------------------------
+                Bond Lengths
+
+i      j        Length (Angstroms)     Length (Bohr)
+0      1          3.7533600000         7.0928224519
+
+Number of Angles: 0
+Number of Torsional Angles: 0
+
+
+----------------------------------------------------------------------
+                          Center of Mass
+
+         x               y               z              Unit
+               0               0     2.741090881      Angstrom
+               0               0     5.179911052          Bohr
+
+----------------------------------------------------------------------
+                Moment of Inertia Tensor
+
+           257.769                 0                 0
+                 0           257.769                 0
+                 0                 0                 0
+
+----------------------------------------------------------------------
+                      Principal Moments of Inertia
+
+           x                 y                 z                Unit
+                 0       72.18271891       72.18271891       amu * ang^2
+                 0       257.7691689       257.7691689      amu * bohr^2
+  0.0000000000e+00  1.1986230649e-38  1.1986230649e-38          g * cm^2
+
+ - Molecule is diatomic.
+
+----------------------------------------------------------------------
+
+         Rotational constants (MHz)
+
+    A = inf        B = 7.0014e+03        C = 7.0014e+03
+
+----------------------------------------------------------------------
+
+        Rotational constants (cm-1)
+
+    A = inf        B = 2.3354e-01        C = 2.3354e-01
+
+----------------------------------------------------------------------
+
+                                Z-Matrix
+Li  
+F        1       7.0928225
+
+----------------------------------------------------------------------
+
+             Converted back to Cartesian
+
+Li       0.000000      0.000000      0.000000
+F        0.000000      0.000000      7.092822
+
+----------------------------------------------------------------------
+                       Geometry in bohr 
+
+1     Li      0.0000000000    0.0000000000    0.0000000000
+2     F       0.0000000000    0.0000000000    7.0928224519
+
+ Number of nodes, processes per node used for SCF calculation: 1, 1
+
+Common Options
+{
+  maxiter       = 200
+  basis         = cc-pvtz spherical
+  geom_units    = angstrom
+  ang2au factor = 1.889726126
+  debug         = false
+  file_prefix   = 2.400-Eq
+}
+
+SCF Options
+{
+  charge            = 0
+  multiplicity      = 1
+  level shift       = 0
+  tol_int           = 1e-18
+  tol_sch           = 1e-12
+  tol_lindep        = 1e-05
+  conve             = 1e-08
+  convd             = 1e-07
+  diis_hist         = 10
+  AO_tilesize       = 30
+  writem            = 1
+  damp              = 100
+  n_lindep          = 0
+  scf_type          = restricted
+  direct_df         = false
+  restart_size      = 2000
+  restart           = false
+  debug             = false
+}
+
+Number of basis functions = 60
+
+Total number of shells = 20
+
+Total number of electrons = 12
+  # of alpha electrons    = 6
+  # of beta electons      = 6
+
+Nuclear repulsion energy  = 3.80666514394782
+
+# of {all,non-negligible} shell-pairs = {210,210}
+Number of AO tiles = 20
+
+Time for initial setup: 0.00 secs
+HF exch = 1.00
+
+Time for computing 1-e integrals T, V, S: 0.00 secs
+Time for computing orthogonalizer: 0.00 secs
+
+Superposition of Atomic Density Guess ...
+Time taken for SAD: 0.21 secs
+Total Time to compute initial guess: 0.21 secs
+
+
+ SCF iterations
+-----------------------------------------------------------------------------
+ Iter     Energy            E-Diff       RMSD        |[F,P]|^2       Time(s)
+-----------------------------------------------------------------------------
+   1  -106.4407478554    -1.06e+02     1.32e-02     2.11e-01         0.0 
+   2  -106.7157086313    -2.75e-01     9.96e-04     1.72e+00         0.1 
+   3  -106.7442417856    -2.85e-02     4.87e-03     1.18e+00         0.1 
+   4  -106.8113041655    -6.71e-02     1.75e-03     4.31e-02         0.1 
+   5  -106.8150793355    -3.78e-03     5.94e-04     9.89e-04         0.1 
+   6  -106.8153380161    -2.59e-04     2.42e-04     1.08e-04         0.1 
+   7  -106.8153680779    -3.01e-05     5.35e-05     4.22e-06         0.1 
+   8  -106.8153694910    -1.41e-06     8.04e-06     1.52e-07         0.1 
+   9  -106.8153695273    -3.63e-08     3.20e-06     2.04e-08         0.1 
+  10  -106.8153695305    -3.24e-09     3.55e-07     1.49e-10         0.1 
+  11  -106.8153695306    -4.24e-11     7.67e-08     5.14e-12         0.1 
+
+** Total SCF energy = -106.8153695305880
+
+Nuclear repulsion energy = 3.806665143947823
+#electrons        = 12
+1e energy kinetic = 106.7932680397713057
+1e energy N-e     = -266.6682248669171145
+1e energy         = -159.8749568271457520
+2e energy         = 49.2529221526099334
+writing orbitals and density to disk ... done.
+
+Total Time taken for Hartree-Fock: 1.33 secs
+
+CD Options
+{
+  debug             = false
+  skip_cd           = [false, 100]
+  write_cv          = [false, 5000]
+  diagtol           = 1e-09
+  itilesize         = 1000
+  max_cvecs_factor  = 12
+}
+
+- #occupied, #virtual = 12, 108
+
+- Tilesize for the MSO space: 40
+
+-----------------------------------------------------
+Begin 2-index transformation ... 
+
+nAO, nMO, nelectrons = 60, 120, 12
+n_occ_alpha, n_vir_alpha, n_occ_beta, n_vir_beta = 6,54,6,54
+
+Time taken for Fao->Fmo transform: 0.00 secs
+
+-----------------------------------------------------
+Number of AO tiles = 20
+# of {all,non-negligible} shell-pairs = {210,210}
+
+    Begin Cholesky Decomposition
+---------------------------------------------
+Total # of mpi ranks used for Cholesky decomposition: 1
+  --> Number of nodes, mpi ranks per node: 1, 1
+- CPU memory required for computing cholesky vectors: 0.03 GiB
+
+- Time for computing the diagonal: 0.01 secs
+
+- Total number of cholesky vectors = 643
+
+- Time to compute cholesky vectors: 1.93 secs
+
+- CPU memory required for resizing the ao cholesky tensor: 0.05 GiB
+- CPU memory required for ao2mo transformation: 0.05 GiB
+- CPU memory required for the 2-step contraction: 0.07 GiB
+
+- Time for ao to mo transform: 0.29 secs
+
+   End Cholesky Decomposition
+---------------------------------------------
+
+Total Time taken for Cholesky Decomposition: 2.29 secs
+
+scf_type = restricted
+Closed-Shell SCF
+nbf = 60
+nbf_orig = 60
+n_lindep = 0
+focc = 1
+nmo = 120
+nocc = 12
+nvir = 108
+n_occ_alpha = 6
+n_vir_alpha = 54
+n_occ_beta = 6
+n_vir_beta = 54
+nelectrons = 12
+nelectrons_alpha = 6
+nelectrons_beta = 6
+n_frozen_core = 0
+n_frozen_virtual = 0
+----------------------------
+
+Total CPU memory required for Closed Shell Cholesky CCSD calculation: 0.12 GiB
+
+
+ CCSD iterations
+------------------------------------------------------------
+  Iter     Residuum          Correlation          Time(s)
+------------------------------------------------------------
+   1     0.7396297238176    0.0000000000000         1.50
+   2     0.0710998006412   -0.3017208759938         1.47
+   3     0.0344731455300   -0.2922898805757         1.51
+   4     0.0253713379288   -0.3013666669683         1.51
+   5     0.0400733456630   -0.2978346053852         1.48
+ MICROCYCLE DIIS UPDATE:                    6
+   6     0.0053189697543   -0.2999224694909         1.47
+   7     0.0082167890400   -0.2997723588125         1.47
+   8     0.0066377264996   -0.3005927719443         1.47
+   9     0.0119854071776   -0.3001643960167         1.55
+  10     0.0197480333705   -0.3008684583489         1.71
+ MICROCYCLE DIIS UPDATE:                   11
+  11     0.0019396976534   -0.3009158082206         1.76
+  12     0.0015293048858   -0.3008360638923         1.76
+  13     0.0016597896201   -0.3008753296073         1.76
+  14     0.0017687030532   -0.3008816690042         1.76
+  15     0.0030601609167   -0.3008794131949         1.75
+ MICROCYCLE DIIS UPDATE:                   16
+  16     0.0004032939341   -0.3009429864746         1.95
+  17     0.0005130398399   -0.3009341098402         2.10
+  18     0.0005302616876   -0.3009780826899         2.17
+  19     0.0009057698991   -0.3009593009432         2.09
+  20     0.0015327930273   -0.3009933696048         2.10
+ MICROCYCLE DIIS UPDATE:                   21
+  21     0.0001385911168   -0.3009961872229         2.18
+  22     0.0001149428768   -0.3009896095283         2.17
+  23     0.0001050480598   -0.3009928257116         2.16
+  24     0.0001132637452   -0.3009927435181         2.15
+  25     0.0001765066527   -0.3009941261832         2.17
+ MICROCYCLE DIIS UPDATE:                   26
+  26     0.0000301493282   -0.3009985989359         2.18
+  27     0.0000376143407   -0.3009987262658         2.17
+  28     0.0000520286528   -0.3010008909523         2.16
+  29     0.0000924060184   -0.3010003330881         2.15
+  30     0.0001697132105   -0.3010018234295         2.00
+ MICROCYCLE DIIS UPDATE:                   31
+  31     0.0000087515804   -0.3010022017587         2.15
+  32     0.0000075299900   -0.3010018607107         2.07
+  33     0.0000058961384   -0.3010020463750         2.47
+  34     0.0000059390170   -0.3010020502719         2.47
+  35     0.0000063322855   -0.3010021788241         1.98
+ MICROCYCLE DIIS UPDATE:                   36
+  36     0.0000011981274   -0.3010025960959         1.51
+  37     0.0000014416175   -0.3010025917608         1.95
+  38     0.0000019532628   -0.3010026590678         1.93
+  39     0.0000032978790   -0.3010026389397         1.93
+  40     0.0000055249564   -0.3010026984294         1.94
+ MICROCYCLE DIIS UPDATE:                   41
+  41     0.0000002722575   -0.3010026964813         1.94
+  42     0.0000002421974   -0.3010026907887         1.95
+  43     0.0000002654276   -0.3010026935673         1.95
+  44     0.0000004128985   -0.3010026958243         1.94
+  45     0.0000007750990   -0.3010026973428         1.94
+ MICROCYCLE DIIS UPDATE:                   46
+  46     0.0000000658826   -0.3010027060576         1.94
+  47     0.0000000594443   -0.3010027078301         1.94
+  48     0.0000000759828   -0.3010027106372         1.94
+  49     0.0000001152954   -0.3010027113298         1.94
+  50     0.0000001983427   -0.3010027121554         1.95
+ MICROCYCLE DIIS UPDATE:                   51
+  51     0.0000000178157   -0.3010027138647         1.94
+  52     0.0000000152276   -0.3010027135170         1.95
+  53     0.0000000148392   -0.3010027136752         1.94
+  54     0.0000000191988   -0.3010027138727         1.94
+  55     0.0000000323495   -0.3010027139266         1.94
+ MICROCYCLE DIIS UPDATE:                   56
+  56     0.0000000045162   -0.3010027144686         1.94
+------------------------------------------------------------------
+ Iterations converged
+ CCSD correlation energy / hartree =        -0.301002714468553
+ CCSD total energy / hartree       =      -107.116372245056510
+
+Time taken for Closed Shell Cholesky CCSD: 107.76 secs
+
+Executing DUCC routine
+======================
+Number of active occupied alpha = 5
+Number of active occupied beta  = 5
+Number of active virtual alpha  = 3
+Number of active virtual beta   = 3
+ducc_lvl = 0
+
+Full SCF Energy: -106.815369530588
+Bare SCF Energy: -106.815367422155
+Frozen Core Energy: -0.000002108433
+
+DUCC: Time taken to compute Bare Hamiltonian: 0.00 secs
+Bare Active Space SCF Energy: -30.491624441228
+Fully Contracted Scalar: -0.000000000000
+
+DUCC: Total compute time: 0.00 secs
+
+DUCC: Time to write results: 0.00 secs
+DUCC Memory Stats
+-----------------
+allocation count: 526
+deallocation count: 525
+total memory allocated: 0.669043 GiB
+total memory deallocated: 0.669043 GiB
+maximum memory in single allocation: 0.380116 GiB
+maximum memory consumption: 0.472345 GiB
